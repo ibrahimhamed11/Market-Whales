@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "plugins": [
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "your_merchant_identifier_here",
+          "enableGooglePay": true
+        }
+      ]
+    ],
+    "name": "Market Whales",
+    "slug": "MarketWhales",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ibrahimhamed112.mmM"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.ibrahimhamed112.mmM"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "83a58872-3d4f-4300-898f-ebd4eff69328"
+      }
+    }
+  }
+}
