@@ -18,7 +18,6 @@ const SellerProfileScreen = () => {
     const [sellerData, setSellerDetails] = useState({
         name: '',
         email: '',
-        age: 0,
         phone: '',
         image: '',
     });
@@ -26,7 +25,6 @@ const SellerProfileScreen = () => {
 
     //order details
     const handleOrderDetails = (order) => {
-        console.log(order)
         setSelectedOrder(order);
         setOrderModalVisible(true);
     };
@@ -34,6 +32,7 @@ const SellerProfileScreen = () => {
         setSelectedOrder(null);
         setOrderModalVisible(false);
     };
+
 
     // Function to render the appropriate icon based on the order status
     const renderOrderStatusIcon = (status) => {
