@@ -19,7 +19,12 @@ import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import ip from '../ipConfig';
 
-export default function SellerRegister({ navigation }) {
+export default function SellerRegister({ navigation, route }) {
+
+
+
+    const { RoleType } = route.params;
+
     const [name, setName] = useState({ value: '', error: '' });
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
@@ -154,6 +159,7 @@ export default function SellerRegister({ navigation }) {
                     <SellerLogo />
                     <Header style={[styles.arabicText, { fontFamily: 'Droid', fontSize: 20 }]}>
                         استمارة التسجيل للبائع
+                        {RoleType}
                     </Header>
                     {renderProgressBar()}
                     {step === 1 && (

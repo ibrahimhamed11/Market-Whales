@@ -19,11 +19,6 @@ import { theme } from "../componants/theme";
 import COLORS from "../colors/colors";
 
 
-import jwtDecode from "jwt-decode";
-import axios from "axios";
-
-
-
 
  import { loginUser } from '../utils/api/Auth'
 import { useSelector } from 'react-redux'; // Add this import

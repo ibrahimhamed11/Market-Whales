@@ -7,7 +7,7 @@ const checkSavedPassword = async (navigation) => {
   if (savedPassword) {
     navigation.reset({
       index: 0,
-      routes: [{ name: 'Login' }],
+      routes: [{ name: 'Home' }],
     });
   } else {
     navigation.reset({
