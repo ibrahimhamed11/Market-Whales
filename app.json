@@ -7,7 +7,8 @@
           "merchantIdentifier": "your_merchant_identifier_here",
           "enableGooglePay": true
         }
-      ]
+      ],
+      "expo-localization"
     ],
     "name": "Market Whales",
     "slug": "MarketWhales",

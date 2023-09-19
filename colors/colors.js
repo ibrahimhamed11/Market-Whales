@@ -10,7 +10,8 @@ const COLORS = {
     darkMagenta: '#a010a5',
     lightPurple: '#ab46bc',
     lightMagenta: '#e1bee8',
-   darkBlue: '#00418b'
+   darkBlue: '#00418b',
+   inactive:'#615D6059'
   };
   
   export default COLORS;

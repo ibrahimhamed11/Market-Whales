@@ -149,10 +149,10 @@ export default function App() {
         />
 
 
-        {/* 
+        
         <Drawer.Screen
           name="تواصل معنا"
-          component={CheckoutScreen}
+          component={Notfications}
           options={{
             drawerIcon: ({ color, size }) => (
               <FontAwesome name="phone" color={color} size={size} style={{ marginRight: 10 }} />
@@ -170,7 +170,7 @@ export default function App() {
             },
             headerTintColor: 'white',
           }}
-        /> */}
+        />
 
         <Drawer.Screen
           name="الاشعارات"
