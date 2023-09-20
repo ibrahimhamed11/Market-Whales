@@ -123,41 +123,40 @@ export default function App() {
         headerRight: () => <NotificationIcon notification={notification} />
       }}
     >
+<Drawer.Screen
+  name={language === 'en' ? 'Home' : 'الرئيسية'}
+  component={TabBar}
+  options={{
+   
+    headerShown: true,
+    headerTitle: () => (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        
+      </View>
+    ),
+    headerStyle: {
+      backgroundColor: '#ffffff',
+      height: Dimensions.get('screen').height * 0.1,
+    },
+    headerTintColor: '#000000',
+    drawerLabelStyle: {
+      fontFamily: 'Droid',
+      fontWeight: 'bold',
+    },
+    drawerActiveBackgroundColor: '#76005e50',
+    drawerActiveTintColor: '#ffffff',
+  }}
+/>
 
-    <Drawer.Screen
-        name={language === 'en' ? 'Home' : 'الرئيسية'}
-        component={TabBar}
-        options={{
-          drawerIcon: ({ color, size }) => (
-            <FontAwesome name="home" color={color} size={size} style={{ marginRight: 10 }} />
-          ),
-          headerShown: true,
-          headerTitle: () => (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <FontAwesome name="" size={20} color="#75000ea3" style={{ marginRight: '80%' }} />
-              <Text style={{ color: 'white', fontSize: 18 }}></Text>
-            </View>
-          ),
-          headerStyle: {
-            backgroundColor: '#ffffff',
-            height: Dimensions.get('screen').height * 0.1,
-          },
-          headerTintColor: '#000000',
-          drawerLabelStyle: {
-            fontFamily: 'Droid',
-            fontWeight: 'bold',
-          },
-          drawerActiveBackgroundColor: '#76005e50',
-          drawerActiveTintColor: '#ffffff',
-        }}
-      />
+
+
+
+
       <Drawer.Screen
         name={language === 'en' ? 'Contact Us' : 'تواصل معنا'}
         component={Notfications}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <FontAwesome name="phone" color={color} size={size} style={{ marginRight: 10 }} />
-          ),
+       
           drawerLabel: ({ focused }) => (
             <Text style={{ fontFamily: 'Droid', fontWeight: focused ? 'bold' : 'normal' }}>
               {language === 'en' ? 'Contact Us' : 'تواصل معنا'}
@@ -176,9 +175,7 @@ export default function App() {
         name={language === 'en' ? 'Notifications' : 'الاشعارات'}
         component={Notfications}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <FontAwesome name="bell" color={color} size={size} style={{ marginRight: 10 }} />
-          ),
+      
           headerShown: true,
           headerTitle: '',
           headerStyle: {
