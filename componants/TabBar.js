@@ -13,7 +13,6 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import * as Font from 'expo-font';
-
 import Sellerprofile from '../screens/SellerProfile'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Home from '../screens/Home';
@@ -24,7 +23,7 @@ const CustomTabBarIcon = ({ iconName, iconSize, isFocused, activeColor, inactive
 
   useEffect(() => {
     if (isFocused) {
-      translateY.value = withSpring(-10, { damping: 15, stiffness: 60 }); // Adjust damping and stiffness as needed
+      translateY.value = withSpring(-15, { damping: 15, stiffness: 60 }); // Adjust damping and stiffness as needed
       rotate.value = withRepeat(withSpring(360, { damping: 15, stiffness: 60 }), -1); // Adjust damping and stiffness as needed
     }
   }, [isFocused]);
@@ -115,10 +114,10 @@ const TabBar = () => {
             } else if (route.name === 'السله') {
               iconName = focused ? 'shopping-basket' : 'shopping-basket';
             } else if (route.name === 'التوصيات') {
-              iconName = focused ? 'user' : 'user';
+              iconName = focused ? 'area-chart' : 'area-chart';
             }
           
-            const iconSize = focused ? size * 1.8 : size; 
+            const iconSize = focused ? size * 1.3 : size; 
           
           
           return (
@@ -126,23 +125,23 @@ const TabBar = () => {
             iconName={iconName}
             iconSize={iconSize}
             isFocused={focused}
-            activeColor={COLORS.accent}
+            activeColor={COLORS.darkerPurple}
             inactiveColor={COLORS.inactive}
           />
           )
           },
           
-          tabBarActiveTintColor: COLORS.accent,
+          tabBarActiveTintColor: COLORS.darkerPurple,
           tabBarInactiveTintColor: COLORS.inactive,
           
           tabBarStyle: {
-            borderTopWidth: 1,
+            borderTopWidth: 1.2,
             height: 80, 
             position: 'absolute',
-            bottom: 20, 
+            bottom: 8, 
             left: 8,
             right: 8,
-            borderRadius: 40, 
+            borderRadius: 15, 
             paddingBottom: 5,
             shadowColor: '#0b0323',
             shadowOffset: {
@@ -152,13 +151,14 @@ const TabBar = () => {
             shadowOpacity: 0.25,
             shadowRadius: 3.5,
             elevation: 5,
+            backgroundColor:COLORS.white
           },
           tabBarLabelStyle: [styles.customText, { fontSize: 11 }],
           tabBarIconStyle: {
          
             zIndex: 2, 
           },
-          tabBarActiveBackgroundColor: {}
+          tabBarActiveBackgroundColor: ''
         })}
       >  
         <Tab.Screen name='التوصيات' component={role === 'user' ? Sellerprofile : Sellerprofile} options={{ headerShown: false }}/>
@@ -201,14 +201,15 @@ const TabBar = () => {
           },
 
           
-          tabBarActiveTintColor: '#761700',
+          tabBarActiveTintColor: COLORS.darkerPurple,
           tabBarInactiveTintColor: '#292726c2',
 
           tabBarStyle: {
-            borderTopWidth: 1,
+            borderWidth: 10,
+            
             height: 60,
             position: 'absolute',
-            bottom: 10,
+            bottom: 5,
             left: 10,
             right: 10,
             borderRadius: 25,

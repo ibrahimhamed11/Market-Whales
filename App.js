@@ -7,7 +7,9 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StyleSheet, Text, View, TextInput, FlatList, Image, Button, ScrollView, TouchableOpacity, SafeAreaView, Dimensions, ActivityIndicator } from 'react-native';
 import { StripeProvider } from '@stripe/stripe-react-native';
+import { Card } from 'react-native-paper'; // Import the Card component
 
+import CustomDrawerContent from './componants/ContentComponent';
 
 
 
@@ -34,8 +36,6 @@ import { Store } from './Redux/Store';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 export default function App() {
-
-
 
 
 
@@ -109,118 +109,94 @@ export default function App() {
       </View>
     );
 
-    // const {language} = useSelector(state => state.localization.language);
+    const language = useSelector(state => state.Localization.language);
 
     const { notification } = useSelector((state) => state.Notify)
+    const drawerPosition = language === 'ar' ? 'right' : 'left'; // Adjust as per your logic
+
     return (
       <Drawer.Navigator
-        screenOptions={{
-          headerRight: () => <NotificationIcon notification={notification} />,
+
+      drawerContent={props => <CustomDrawerContent {...props} />}
+      screenOptions={{
+        drawerPosition:drawerPosition,
+        headerRight: () => <NotificationIcon notification={notification} />
+      }}
+    >
+
+    <Drawer.Screen
+        name={language === 'en' ? 'Home' : 'الرئيسية'}
+        component={TabBar}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <FontAwesome name="home" color={color} size={size} style={{ marginRight: 10 }} />
+          ),
+          headerShown: true,
+          headerTitle: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <FontAwesome name="" size={20} color="#75000ea3" style={{ marginRight: '80%' }} />
+              <Text style={{ color: 'white', fontSize: 18 }}></Text>
+            </View>
+          ),
+          headerStyle: {
+            backgroundColor: '#ffffff',
+            height: Dimensions.get('screen').height * 0.1,
+          },
+          headerTintColor: '#000000',
+          drawerLabelStyle: {
+            fontFamily: 'Droid',
+            fontWeight: 'bold',
+          },
+          drawerActiveBackgroundColor: '#76005e50',
+          drawerActiveTintColor: '#ffffff',
         }}
-      >
-
-        <Drawer.Screen
-          name="الرئيسية"
-          component={TabBar}
-          options={{
-            drawerIcon: ({ color, size }) => (
-              <FontAwesome name="home" color={color} size={size} style={{ marginRight: 10 }} />
-            ),
-            headerShown: true,
-            headerTitle: () => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <FontAwesome name="" size={20} color="#75000ea3" style={{ marginRight: '80%' }} />
-                <Text style={{ color: 'white', fontSize: 18 }}></Text>
-              </View>
-            ),
-            headerStyle: {
-              backgroundColor: '#ffffff',
-              height: Dimensions.get('screen').height * 0.1,
-              // elevation:5
-            },
-            headerTintColor: '#000000',
-            drawerLabelStyle: {
-              fontFamily: 'Droid',
-              fontWeight: 'bold', // Add the fontWeight property for bold style
-            },
-            drawerActiveBackgroundColor: '#76005e50',
-            drawerActiveTintColor: '#ffffff',
-          }}
-        />
-
-
-        
-        <Drawer.Screen
-          name="تواصل معنا"
-          component={Notfications}
-          options={{
-            drawerIcon: ({ color, size }) => (
-              <FontAwesome name="phone" color={color} size={size} style={{ marginRight: 10 }} />
-            ),
-            drawerLabel: ({ focused }) => (
-              <Text style={{ fontFamily: 'Droid', fontWeight: focused ? 'bold' : 'normal' }}>
-                تواصل معنا
-              </Text>
-            ),
-            drawerActiveBackgroundColor: '#76005e50',
-            drawerActiveTintColor: '#ffffff',
-            headerShown: true,
-            headerStyle: {
-              backgroundColor: '#76005f',
-            },
-            headerTintColor: 'white',
-          }}
-        />
-
-        <Drawer.Screen
-          name="الاشعارات"
-          component={Notfications}
-          options={{
-            drawerIcon: ({ color, size }) => (
-              <FontAwesome name="bell" color={color} size={size} style={{ marginRight: 10 }} />
-            ),
-            headerShown: true,
-            headerTitle: '',
-            headerStyle: {
-              backgroundColor: '#76005f',
-            },
-            headerTintColor: 'white',
-            drawerLabel: ({ focused }) => (
-              <Text style={{ fontFamily: 'Droid', fontWeight: focused ? 'bold' : 'normal' }}>
-                الاشعارات
-              </Text>
-            ),
-            drawerActiveBackgroundColor: '#76005e50',
-            drawerActiveTintColor: '#ffffff',
-          }}
-        />
-
-        {/* <Drawer.Screen
-          name="طلباتي"
-          component={myorders}
-          options={{
-            drawerIcon: ({ color, size }) => (
-              <FontAwesome name="shopping-cart" color={color} size={size} style={{ marginRight: 10 }} />
-            ),
-            headerShown: true,
-            headerTitle: '',
-            headerStyle: {
-              backgroundColor: '#76005f',
-            },
-            headerTintColor: 'white',
-            drawerLabel: ({ focused }) => (
-              <Text style={{ fontFamily: 'Droid', fontWeight: focused ? 'bold' : 'normal' }}>
-                طلباتي
-              </Text>
-            ),
-            drawerActiveBackgroundColor: '#76005e50',
-            drawerActiveTintColor: '#ffffff',
-          }}
-        /> */}
-
-      </Drawer.Navigator>
-    );
-  }
+      />
+      <Drawer.Screen
+        name={language === 'en' ? 'Contact Us' : 'تواصل معنا'}
+        component={Notfications}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <FontAwesome name="phone" color={color} size={size} style={{ marginRight: 10 }} />
+          ),
+          drawerLabel: ({ focused }) => (
+            <Text style={{ fontFamily: 'Droid', fontWeight: focused ? 'bold' : 'normal' }}>
+              {language === 'en' ? 'Contact Us' : 'تواصل معنا'}
+            </Text>
+          ),
+          drawerActiveBackgroundColor: '#76005e50',
+          drawerActiveTintColor: '#ffffff',
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#76005f',
+          },
+          headerTintColor: 'white',
+        }}
+      />
+      <Drawer.Screen
+        name={language === 'en' ? 'Notifications' : 'الاشعارات'}
+        component={Notfications}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <FontAwesome name="bell" color={color} size={size} style={{ marginRight: 10 }} />
+          ),
+          headerShown: true,
+          headerTitle: '',
+          headerStyle: {
+            backgroundColor: '#76005f',
+          },
+          headerTintColor: 'white',
+          drawerLabel: ({ focused }) => (
+            <Text style={{ fontFamily: 'Droid', fontWeight: focused ? 'bold' : 'normal' }}>
+              {language === 'en' ? 'Notifications' : 'الاشعارات'}
+            </Text>
+          ),
+          drawerActiveBackgroundColor: '#76005e50',
+          drawerActiveTintColor: '#ffffff',
+        }}
+      />
+    </Drawer.Navigator>
+  );
+}
 
 
 
