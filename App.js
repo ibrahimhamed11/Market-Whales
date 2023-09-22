@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import { LogBox } from 'react-native';
+import { LogBox ,TouchableHighlight} from 'react-native';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StyleSheet, Text, View, TextInput, FlatList, Image, Button, ScrollView, TouchableOpacity, SafeAreaView, Dimensions, ActivityIndicator } from 'react-native';
 import { StripeProvider } from '@stripe/stripe-react-native';
 import { Card } from 'react-native-paper'; // Import the Card component
-
+import COLORS from './colors/colors';
 import CustomDrawerContent from './componants/ContentComponent';
 
 
@@ -28,7 +28,7 @@ import PhoneAuth from './screens/phoneAuth'
 import PaymentScreen from './screens/PaymentScreen';
 import TradingViewChart from './screens/TradingView';
 import { FontAwesome } from '@expo/vector-icons';
-
+import Setings from './screens/Setings'
 
 LogBox.ignoreAllLogs()
 //redux
@@ -87,7 +87,7 @@ export default function App() {
     const NotificationIcon = ({ notification }) => (
       <View style={{ marginRight: 30 }}>
         <TouchableOpacity onPress={() => nav.navigate("الاشعارات")}>
-          <FontAwesome name="bell" size={20} color="#58564CF3" />
+          <FontAwesome name="bell" size={20} color="#F1E8E8F3" />
           {notification > 0 && (
             <View
               style={{
@@ -115,42 +115,132 @@ export default function App() {
     const drawerPosition = language === 'ar' ? 'right' : 'left'; // Adjust as per your logic
 
     return (
-      <Drawer.Navigator
+<Drawer.Navigator
+  drawerContent={props => <CustomDrawerContent {...props} />}
+  screenOptions={({ navigation }) => {
+    const isRTL = language === 'ar';
+    
+    return {
+      overlayColor: 'transparent',
+      drawerStyle: {
+        backgroundColor: '#DAD3D3',
+        width: '70%',
+      },
+      drawerPosition: isRTL ? 'right' : 'left', // Set drawer position based on language
+      headerLeft: isRTL ? 
+        () => (
+          <TouchableHighlight onPress={() => navigation.toggleDrawer()} underlayColor="rgba(0,0,0,0.2)">
+            <FontAwesome
+              name='bars'
+              size={24}
+              color="#fff"
+              style={{ margin: 10 }}
+            />
+          </TouchableHighlight>
+          
+        ) : (
+          () => (
 
-      drawerContent={props => <CustomDrawerContent {...props} />}
-      screenOptions={{
-        drawerPosition:drawerPosition,
-        headerRight: () => <NotificationIcon notification={notification} />
-      }}
-    >
+            <>
+            <TouchableHighlight onPress={() => handleNotificationPress()} underlayColor="rgba(0,0,0,0.2)">
+              <FontAwesome
+                name='bell'
+                size={24}
+                color="#fff"
+                style={{ margin: 10 }}
+              />
+            </TouchableHighlight>
+            
+            {notification > 0 && (
+                  <View style={{
+                    position: 'absolute',
+                    top: 5,
+                    left: 5,
+                    backgroundColor: 'red',
+                    borderRadius: 10,
+                    width: 20,
+                    height: 20,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}>
+                    <Text style={{ color: '#fff' }}>{notification}</Text>
+                  </View>
+                )}
+</>
+
+          )
+        ),
+      headerRight: isRTL ? 
+        () => (
+          <>
+          <TouchableHighlight onPress={() => handleNotificationPress()} underlayColor="rgba(0,0,0,0.2)">
+            <FontAwesome
+              name='bell'
+              size={24}
+              color="#fff"
+              style={{ margin: 10 }}
+            />
+          </TouchableHighlight>
+                {notification > 0 && (
+                  <View style={{
+                    position: 'absolute',
+                    top: 5,
+                    right: 5,
+                    backgroundColor: 'red',
+                    borderRadius: 10,
+                    width: 20,
+                    height: 20,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}>
+                    <Text style={{ color: '#fff' }}>{notification}</Text>
+                  </View>
+                )}
+          </>
+        ) : (
+          () => (
+            <TouchableHighlight onPress={() => navigation.toggleDrawer()} underlayColor="rgba(0,0,0,0.2)">
+              <FontAwesome
+                name='bars'
+                size={24}
+                color="#fff"
+                style={{ margin: 10 }}
+              />
+            </TouchableHighlight>
+          )
+        ),
+    };
+  }}
+>
+
+  
 <Drawer.Screen
   name={language === 'en' ? 'Home' : 'الرئيسية'}
   component={TabBar}
   options={{
-   
-    headerShown: true,
+
     headerTitle: () => (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         
       </View>
     ),
     headerStyle: {
-      backgroundColor: '#ffffff',
+      backgroundColor: '#51117f',
       height: Dimensions.get('screen').height * 0.1,
     },
-    headerTintColor: '#000000',
+    headerTintColor: '#F1E8E8F3',
     drawerLabelStyle: {
       fontFamily: 'Droid',
       fontWeight: 'bold',
     },
-    drawerActiveBackgroundColor: '#76005e50',
+    drawerActiveBackgroundColor:COLORS.darkerPurple,
     drawerActiveTintColor: '#ffffff',
   }}
 />
 
 
 
-
+{/* 
 
       <Drawer.Screen
         name={language === 'en' ? 'Contact Us' : 'تواصل معنا'}
@@ -190,7 +280,7 @@ export default function App() {
           drawerActiveBackgroundColor: '#76005e50',
           drawerActiveTintColor: '#ffffff',
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 }
@@ -217,6 +307,8 @@ export default function App() {
           <Stack.Screen name='PhoneAuth' component={PhoneAuth} options={{ headerShown: false }} />
           <Stack.Screen name='PaymentScreen' component={PaymentScreen} options={{ headerShown: false }} /> 
           <Stack.Screen name='TradingView' component={TradingViewChart} options={{ headerShown: false }} />
+          <Stack.Screen name='setings' component={Setings} options={{ headerTitle: "",  headerShown: true, }}/>
+
 
         </Stack.Navigator>
         <StatusBar style='auto' />

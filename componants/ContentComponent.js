@@ -1,184 +1,158 @@
 import React, { useState } from "react";
 import {
   DrawerContentScrollView,
-  DrawerItemList,
 } from "@react-navigation/drawer";
 import {
   View,
   Text,
   Image,
-  Switch,
-  TouchableOpacity,
-  Alert,
+  ImageBackground 
 } from "react-native";
-import { Card, Divider, useTheme } from "react-native-paper";
 import { useSelector, useDispatch } from "react-redux";
-import { setLanguage } from "../Redux/Slices/Localization"; // Replace with actual path
-// import { logout } from '../Redux/Slices/Auth'; // Assuming you have a logout action
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
-import { faTruckPlane } from "@fortawesome/free-solid-svg-icons";
+
+import MenuItem from "./MenuItem ";
+import { useNavigation } from '@react-navigation/native';
 
 function CustomDrawerContent(props) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isArabic, setIsArabic] = useState(faTruckPlane);
-  const { colors } = useTheme();
-  const language = useSelector((state) => state.Localization.language);
-  const dispatch = useDispatch();
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+const language = useSelector((state) => state.Localization.language);
 
-  const toggleLanguage = () => {
-    setIsArabic(!isArabic);
-    dispatch(setLanguage(isArabic ? "en" : "ar"));
-  };
 
-  const handleLogout = () => {
-    // dispatch(logout());
-  };
 
-  const handleProfileSettings = () => {
-    Alert("go to profile");
-  };
 
   const staticText = {
     en: {
       darkMode: "Dark Mode",
       arabicLanguage: "Arabic Language",
       userName: "Ibrahim Hamed",
-      profileSettings: "Profile Settings",
+      profileSettings: "Your Profile",
       logout: "Logout",
+      setings:"Setings"
     },
     ar: {
       darkMode: "الوضع الليلي",
       arabicLanguage: "اللغة العربية",
       userName: "Ibrahim Hamed",
-      profileSettings: "الملف الشخصي",
+      profileSettings: "ملفك الشخصي",
       logout: "تسجيل الخروج",
+      setings:"الاعدادات"
+
     },
   };
 
   const text = staticText[language];
+  const navigation = useNavigation(); // Get the navigation object
+
+  const handleProfileSettings = () => {
+    navigation.navigate('JoinUs'); 
+  };
+
+  const handleSignals = () => {
+    // Function for handling signals
+  };
+
+  const handleContactUs = () => {
+    // Function for handling contact us
+  };
+
+  const handleBlogs = () => {
+    // Function for handling blogs
+  };
+
+  const handleCalendar = () => {
+    // Function for handling calendar
+  };
+
+  const handleMarketPrice = () => {
+    // Function for handling market price
+  };
+
+  const handleChart = () => {
+    // Function for handling chart
+  };
+
+  const handleCourses = () => {
+    // Function for handling courses
+  };
+
+  const handleSettings = () => {
+    navigation.navigate('setings'); 
+  };
+
+  const handleLogout = () => {
+    // Function for handling logout
+  };
+
+
+
+  const menuItems = [
+    { names: ['ملفك الشخصي', 'Your Profile'], iconName: 'user', onPress: handleProfileSettings },
+    { names: ['التوصيات', 'Signals'], iconName: 'line-chart', onPress: handleSignals },
+    { names: ['تواصل معنا', 'Contact Us'], iconName: 'envelope', onPress: handleContactUs },
+    { names: ['المقالات', 'Blogs'], iconName: 'newspaper-o', onPress: handleBlogs },
+    { names: ['التقويم', 'Calendar'], iconName: 'calendar', onPress: handleCalendar },
+    { names: ['اسعار السوق', 'Market Price'], iconName: 'money', onPress: handleMarketPrice },
+    { names: ['الشارت', 'Chart'], iconName: 'line-chart', onPress: handleChart },
+    { names: ['الكورسات', 'Courses'], iconName: 'graduation-cap', onPress: handleCourses },
+    { names: ['الإعدادات', 'Settings'], iconName: 'cogs', onPress: handleSettings },
+    { names: ['تسجيل الخروج', 'Logout'], iconName: 'sign-out', onPress: handleLogout },
+  ];
+
 
   return (
     <DrawerContentScrollView {...props}>
-      <View style={{ margin: 3, padding: 2 }}>
-        <Card>
-          <Card.Content>
-            <View style={{ alignItems: "center", marginBottom: 10 }}>
-              <Image
-                source={require("../assets/log.png")}
-                style={{ width: 100, height: 100, borderRadius: 30 }}
-              />
-              <Text
-                style={{
-                  fontFamily: "Droid",
-                  textAlign: "center",
-                  marginTop: 10,
-                  fontSize: 22,
-                }}
-              >
-                {text.userName}
-              </Text>
-            </View>
+<ImageBackground 
+  source={require('../assets/user2.png')} 
+  style={{ 
+    flex: 1,
+    height:150,
+    width:'100%',
+    overflow: 'hidden'  ,
+    borderRadiusButtom: 70, 
 
-            <View style={{ marginTop: 10, alignSelf: "center" }}>
-              <TouchableOpacity onPress={handleProfileSettings}>
-                <View
-                  style={{
-                    flexDirection: language === "ar" ? "row" : "row-reverse",
-                    alignItems: "center",
-                    marginBottom: 5,
-                  }}
-                >
-                  <FontAwesomeIcon
-                    name="cog"
-                    size={15}
-                    style={{
-                      marginRight: language === "ar" ? 10 : 10,
-                      marginLeft: 10,
-                    }}
-                  />
-                  <Text style={{ fontFamily: "Droid", fontSize: 14 }}>
-                    {text.profileSettings}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleLogout}>
-                <View
-                  style={{
-                    flexDirection: language === "ar" ? "row" : "row-reverse",
-                    alignItems: "center",
-                    marginBottom: 5,
-                  }}
-                >
-                  <FontAwesomeIcon
-                    name="sign-out"
-                    size={20}
-                    style={{
-                      marginRight: language === "ar" ? 10 : 10,
-                      marginLeft: 10,
-                    }}
-                  />
-                  <Text style={{ fontFamily: "Droid", fontSize: 14 }}>
-                    {text.logout}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </Card.Content>
-        </Card>
-      </View>
-      <DrawerItemList {...props} />
-      <Divider style={{ marginVertical: 60, marginHorizontal: 10 }} />
+  }}
+>
+  <View style={{ flexDirection: language === 'en' ? 'row-reverse' : 'row', alignItems: 'center', margin:20, padding: 2 }}>
+    <Image
+      source={require("../assets/userimage.png")}
+      style={{
+        width: 60,
+        height: 60,
+        borderRadius: 52, 
+     
+      }}
+    />
+ <Text
+  style={{
+    fontFamily: "Droid",
+    textAlign: language === 'ar' ? 'right' : 'left',
+    marginTop: 10,
+    fontSize: 20,
+    marginLeft: 15,
+    marginRight: 15,
+    fontWeight: 'bold', 
+    color: '#51117f' 
+  }}
+>
+      {text.userName}
+    </Text>
+  </View>
+</ImageBackground>
 
-      <Card style={{ marginHorizontal: 2, padding: 10 }}>
-        <View
-          style={{
-            flexDirection: language === "ar" ? "row-reverse" : "row",
-            alignItems: "center",
-            marginBottom: 10,
-          }}
-        >
-          <FontAwesomeIcon
-            name="moon-o"
-            size={20}
-            color={colors.primary}
-            style={{ marginRight: 10 }}
-          />
-          <Text style={{ flex: 1, fontFamily: "Droid", fontSize: 16 }}>
-            {text.darkMode}
-          </Text>
-          <Switch
-            value={isDarkMode}
-            onValueChange={toggleDarkMode}
-            color={colors.primary}
-          />
-        </View>
-        <View
-          style={{
-            flexDirection: language === "ar" ? "row-reverse" : "row",
-            alignItems: "center",
-            marginBottom: 10,
-          }}
-        >
-          <FontAwesomeIcon
-            name="language"
-            size={20}
-            color={colors.primary}
-            style={{ marginRight: 10 }}
-          />
-          <Text style={{ flex: 1, fontFamily: "Droid", fontSize: 16 }}>
-            {text.arabicLanguage}
-          </Text>
-          <Switch
-            value={isArabic}
-            onValueChange={toggleLanguage}
-            color={colors.primary}
-          />
-        </View>
-      </Card>
+
+<View style={{ marginTop: 30 }}>
+      {menuItems.map((item, index) => (
+        <MenuItem
+
+          key={index}
+          names={item.names}
+          iconName={item.iconName}
+          onPress={item.onPress}
+          language={language}
+          spacing={index === menuItems.length - 1 ? 5 : 30} 
+        />
+      ))}
+    </View>
     </DrawerContentScrollView>
   );
 }

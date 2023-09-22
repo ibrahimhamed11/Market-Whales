@@ -1,39 +1,195 @@
-import React, { useEffect, useState } from 'react';
-import {
-    View,
-    StyleSheet,
-    FlatList,
-    ScrollView,
-    Image,
-    Text,
-    Dimensions,
-    ImageBackground,
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView, Keyboard, TouchableWithoutFeedback, Image, Dimensions, FlatList } from 'react-native';
+import { Card, Title, Headline, Caption } from 'react-native-paper';
+import { useSelector } from 'react-redux';
+import Background from '../componants/Background';
+const { width } = Dimensions.get('window');
+const cardWidth = (width - 40) / 2; // Adjust as needed
+const cardHeight = 210; // Adjust as needed
 
-} from "react-native";
+const cardsData = [
+    { 
+      id: 1, 
+      title: { en: 'Trading Companies', ar: 'شركات التداول' },
+      caption: { 
+        en: 'Explore information about trading companies, and find based on licenses ', 
+        ar: ' اطلع على معلومات وتقييمات عن شركات التداول وافضل الشركات من خلال التراخيص'
+          },
+      icon: require('../assets/home/companies.png'), 
+      onPress: () => showAlert('Card 1 Pressed') 
+    },
+    { 
+      id: 2, 
+      title: { en: 'Saudi Market', ar: 'السوق السعودي' },
+      caption: { 
+        en: 'Follow the Saudi stock market and learn how to invest in it', 
+        ar: 'قم بمتابعة بورصة الأسهم السعودية وكيفية الاستثمار في السوق السعودي' 
+      },
+      icon: require('../assets/home/suadi.png'), 
+      onPress: () => showAlert('Card 2 Pressed') 
+    },
+    { 
+      id: 3, 
+      title: { en: 'Recommendations', ar: 'التوصيات' },
+      caption: { 
+        en: 'Follow a selection of technical analysts and enter strong market opportunities', 
+        ar: 'يمكنك متابعة نخبة من المحللين الفنيين ودخول فرص قوية مع السوق' 
+      },
+      icon: require('../assets/home/signals.png'), 
+      onPress: () => showAlert('Card 3 Pressed') 
+    },
+    { 
+      id: 4, 
+      title: { en: 'Courses', ar: 'الدورات التعليمية' },
+      caption: { 
+        en: 'Benefit from educational material provided by a group of trading experts', 
+        ar: 'يمكنك الاستفادة من المواد التعليمية التي يقدمها مجموعة من خبراء التداول' 
+      },
+      icon: require('../assets/home/course.png'), 
+      onPress: () => showAlert('Card 4 Pressed') 
+    },
+    { 
+      id: 5, 
+      title: { en: 'Trading Tools', ar: 'أدوات التداول' },
+      caption: { 
+        en: 'Make use of our trading tools, including indicators, expert advisors, and scripts', 
+        ar: 'يمكنك الاستفادة من أدوات التداول المتاحة لدينا من مؤشرات وخبراء  ' 
+      },
+      icon: require('../assets/home/tools.png'), 
+      onPress: () => showAlert('Card 5 Pressed') 
+    },
+    { 
+      id: 6, 
+      title: { en: 'Cashback', ar: 'الكاش باك' },
+      caption: { 
+        en: 'Benefit from a return on your trading volume if you are registered under our agency', 
+        ar: 'يمكنك الاستفادة من عائد على حجم التداول لك إذا كنت مسجل تحت وكالتنا' 
+      },
+      icon: require('../assets/home/cashback.png'), 
+      onPress: () => showAlert('Card 6 Pressed') 
+    },
+  ];
+  
+
+
+
+
+
+function showAlert(message) {
+  Alert.alert(message);
+}
 
 export default function StartScreen({ navigation }) {
+  const language = useSelector((state) => state.Localization.language);
 
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        {/* <Background> */}
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.titleContainer}>
+          {/* <Title style={styles.title}>
+            {language === 'en' ? 'Home Page' : 'الصفحة الرئيسية'}
+          </Title> */}
+        </View>
+        <FlatList
+          data={cardsData}
+          numColumns={2}
+          contentContainerStyle={styles.row}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.cardContainer}
+              onPress={item.onPress}
+            >
+              <Card style={styles.card}>
+                <Card.Content style={styles.cardContent}>
+                  <View style={styles.imageContainer}>
+                    <Image source={item.icon} style={styles.cardImage} />
+                  </View>
+                  <Title style={styles.cardTitle}>
+                    {item.title[language]}
+                  </Title>
 
-    return (
-        // <Background>
-        <ScrollView style={styles.con}>
-
-        </ScrollView>
-        // </Background>
-    );
+                  <Caption style={styles.cardCaption}>
+                    {item.caption[language]}
+                  </Caption>
+                </Card.Content>
+              </Card>
+            </TouchableOpacity>
+          )}
+        />
+      </ScrollView>
+      {/* </Background> */}
+    </TouchableWithoutFeedback>
+  );
 }
 
 const styles = StyleSheet.create({
-    con: {
-        marginBottom: 50
-    },
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginBottom: 30,
-        position: 'absolute'
-    },
-   
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f8f8f8',
+    paddingTop: 20,
+  },
+  titleContainer: {
+    marginBottom: 5,
+  },
+  title: {
+    fontSize: 15,
+    textAlign: 'center',
 
+fontFamily:'Droid'
+  },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  cardContainer: {
+    margin: 6,
+    width: cardWidth, // Set a fixed width
+    height: cardHeight, // Set a fixed height
+  },
+  card: {
+    borderRadius: 20,
+    elevation: 4,
+    backgroundColor: '#E6E6E6',
+    width: '100%', // Make sure the card takes 100% width of the container
+    height: '100%', // Make sure the card takes 100% height of the container
+  },
+  cardContent: {
+    alignItems: 'center',
+  },
+  imageContainer: {
+    width: 100,
+    height: 80,
+    borderRadius: 20,
+    overflow: 'hidden',
+    marginBottom: 5,
+    borderWidth: 2,
+    borderColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 4,
+  },
+  cardImage: {
+    flex: 1,
+    width: '80%',
+    height: '70%',
+    resizeMode: 'cover',
+  },
+  cardTitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#282534',
+    fontFamily: 'Droid',
+  },
+  cardCaption: {
+    fontSize: 11,
+    textAlign: 'center',
+    color: '#51117f',
+    fontFamily: 'Droid',
+  },
 });
