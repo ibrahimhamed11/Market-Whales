@@ -106,7 +106,7 @@ const JoinUs = () => {
 
                   onPress={() => {
                    
-                    navigation.navigate('SellerRegister', { RoleType:'coursesprovider' });
+                    navigation.navigate('Register', { RoleType:'coursesprovider' });
                   }}
                   style={styles.cardContainer}
                 >
@@ -133,8 +133,11 @@ const JoinUs = () => {
 
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => navigation.navigate("MotherRegister")}
-                  style={styles.cardContainer}
+                  onPress={() => {
+                   
+                    navigation.navigate('Register', { RoleType:'signalsprovider' });
+                  }}                
+                    style={styles.cardContainer}
                 >
                   <Card
                     style={[
@@ -168,7 +171,11 @@ const JoinUs = () => {
                 {/* join us as mother*/}
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => navigation.navigate("MotherRegister")}
+                  onPress={() => {
+                   
+                    navigation.navigate('Register', { RoleType:'client' });
+                  }} 
+                  
                   style={styles.cardContainer}
                 >
                   <Card
@@ -195,10 +202,14 @@ const JoinUs = () => {
                     </Animated.View>
                   </Card>
                 </TouchableOpacity>
-                {/* join us as mother*/}
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => navigation.navigate("MotherRegister")}
+                  onPress={() => {
+                   
+                    navigation.navigate('Register', { RoleType:'analyzer' });
+                  }} 
+                  
+                  
                   style={styles.cardContainer}
                 >
                   <Card

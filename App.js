@@ -18,8 +18,7 @@ import CustomDrawerContent from './componants/ContentComponent';
 import Login from './screens/Login';
 import Splash from './componants/Splash';
 import Onboarding from './screens/Onboarding';
-import sellerRegister from './screens/SellerRegister'
-import motherRegister from './screens/MotherRegister'
+import Register from './screens/Register'
 import JoinUs from './screens/joinUs'
 import TabBar from './componants/TabBar';
 import SellerProfile from './screens/SellerProfile'
@@ -301,8 +300,7 @@ export default function App() {
           <Stack.Screen name='Onboarding' component={Onboarding} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
           <Stack.Screen name='JoinUs' component={JoinUs} options={{ headerShown: false }} />
-          <Stack.Screen name='SellerRegister' component={sellerRegister} options={{ headerShown: false }} />
-          <Stack.Screen name='MotherRegister' component={motherRegister} options={{ headerShown: false }} />
+          <Stack.Screen name='Register' component={Register} options={{ headerShown: false }} />
           <Stack.Screen name='Sellerprofile' component={SellerProfile} options={{ headerShown: false }} />
           <Stack.Screen name='PhoneAuth' component={PhoneAuth} options={{ headerShown: false }} />
           <Stack.Screen name='PaymentScreen' component={PaymentScreen} options={{ headerShown: false }} /> 

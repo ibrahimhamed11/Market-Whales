@@ -20,7 +20,7 @@ const MenuItem = ({ names, iconName, onPress, language, spacing }) => {
       >
         <FontAwesomeIcon
           name={iconName}
-          size={20}
+          size={25}
           style={{
             marginRight: language === 'ar' ? 15 : 15,
             marginLeft: 15,
@@ -28,7 +28,7 @@ const MenuItem = ({ names, iconName, onPress, language, spacing }) => {
             color: iconName === 'sign-out' ? '#BE1313' : '#51117f',
           }}
         />
-        <Text style={{ fontFamily: 'Droid', fontSize: 14, color: iconName === 'sign-out' ? '#BE1313' : '#51117f' }}>
+        <Text style={{ fontFamily: 'Droid', fontSize: 20, color: iconName === 'sign-out' ? '#BE1313' : '#51117f' }}>
           {displayName}
         </Text>
       </View>

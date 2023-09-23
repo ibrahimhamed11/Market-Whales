@@ -108,7 +108,7 @@ const TabBar = () => {
   }
 
   
-  if (role == "user") {
+  if (role == "client") {
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({

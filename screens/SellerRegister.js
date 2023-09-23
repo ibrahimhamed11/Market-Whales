@@ -8,9 +8,8 @@ import Button from '../componants/Button';
 import TextInput from '../componants/TextInput';
 import BackButton from '../componants/BackButton';
 import { theme } from '../componants/theme'
-import { emailValidator } from '../componants/helpers/emailValidator';
-import { passwordValidator } from '../componants/helpers/passwordValidator';
-import { phoneValidator, nameValidator, addressValidator, usernameValidator } from '../componants/helpers/dataValidator';
+import {emailValidator,passwordValidator, phoneValidator, nameValidator, addressValidator, usernameValidator } from '../componants/helpers/dataValidator';
+
 
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import * as Font from 'expo-font';
