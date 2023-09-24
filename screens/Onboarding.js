@@ -14,7 +14,11 @@ import { useFonts } from "expo-font";
 import { useSelector } from "react-redux";
 import COLORS from "../colors/colors";
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get('window');
+const imageWidth = width * 0.75;
+const imageHeight = height * 0.35;
+const subtitleFontSize = width * 0.04; // Adjust as needed
+const titleFontSize = width * 0.06; // Adjust as needed
 const slides = [
   {
     id: "1",
@@ -63,33 +67,31 @@ const localizationStrings = {
 
 
 
-
 const Slide = ({ item, language }) => {
   return (
     <View style={{ width, justifyContent: "center" }}>
       <Image
         source={item?.image}
         style={{
-          height: "70%",
-          width: Dimensions.get("window").width * 0.75,
+          height: imageHeight,
+          width: imageWidth,
           resizeMode: "contain",
-          marginTop: 50,
+          marginTop: height * 0.05,
           justifyContent: "flex-end",
-          marginLeft: "15%",
+          marginLeft: width * 0.15,
         }}
       />
       <View style={{ alignItems: "center" }}>
-        <Text style={styles.title}>
+        <Text style={[styles.title, { fontSize: titleFontSize }]}>
           {language === "ar" ? item?.titleArabic : item?.titleEnglish}
         </Text>
-        <Text style={styles.subtitle}>
+        <Text style={[styles.subtitle, { fontSize: subtitleFontSize }]}>
           {language === "ar" ? item?.subtitleArabic : item?.subtitleEnglish}
         </Text>
       </View>
     </View>
   );
 };
-
 const OnboardingScreen = ({ navigation }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
   const ref = React.useRef();
@@ -277,21 +279,21 @@ const OnboardingScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   subtitle: {
     color: COLORS.gray,
-    fontSize: 16,
-    marginTop: 8,
+    fontSize: subtitleFontSize,
+    marginTop: width * 0.06,
     maxWidth: "80%",
     textAlign: "center",
     lineHeight: 23,
     fontFamily: "Droid",
-    fontWeight: "bold" 
-
+    fontWeight: "bold",
   },
   title: {
+    fontSize: titleFontSize,
     color: COLORS.darkerPurple,
-    fontSize: 26,
     fontWeight: "bold",
     textAlign: "center",
     fontFamily: "Droid",
+    marginTop: width * 0.15,
   },
   indicator: {
     height: 6,
@@ -300,6 +302,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 3,
     borderRadius: 20,
   },
+
 });
 
 export default OnboardingScreen;

@@ -3,6 +3,7 @@ const COLORS = {
     white: '#fff',
     accent: '#76005f',
     gray: '#A9A9A9',
+    
     customColor: '#cf96c4',
     darkerPurple: '#51117f',
     darkerMagenta: '#ca1483',

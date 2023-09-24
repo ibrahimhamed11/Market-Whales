@@ -5,28 +5,30 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
 import Background from '../componants/Background';
+
+
 const { width } = Dimensions.get('window');
-const cardWidth = (width - 40) / 2; // Adjust as needed
-const cardHeight = 210; // Adjust as needed
+const { height } = Dimensions.get('window');
 
+console.log(height)
+const cardWidth = (width - 40) / 2;
+const cardHeight = width/1.75;
 
+const titlefontsize=width * 0.03
 
-
-
-
-function showAlert(message) {
-  Alert.alert(message);
-}
 
 export default function StartScreen({ navigation }) {
-  
+
+
+
+
   const cardsData = [
     { 
       id: 1, 
       title: { en: 'Trading Companies', ar: 'شركات التداول' },
       caption: { 
         en: 'Explore information about trading companies, and find based on licenses ', 
-        ar: ' اطلع على معلومات وتقييمات عن شركات التداول وافضل الشركات من خلال التراخيص'
+        ar: ' اطلع على معلومات وتقييمات عن شركات التداول وافضل الشركات  '
           },
       icon: require('../assets/home/companies.png'), 
       onPress: () => navigation.navigate('DevelopmentScreen')
@@ -90,10 +92,8 @@ export default function StartScreen({ navigation }) {
 
   
   const language = useSelector((state) => state.Localization.language);
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        {/* <Background> */}
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.titleContainer}>
           {/* <Title style={styles.title}>
@@ -110,25 +110,25 @@ export default function StartScreen({ navigation }) {
               style={styles.cardContainer}
               onPress={item.onPress}
             >
-              <Card style={styles.card}>
-                <Card.Content style={styles.cardContent}>
-                  <View style={styles.imageContainer}>
-                    <Image source={item.icon} style={styles.cardImage} />
-                  </View>
-                  <Title style={styles.cardTitle}>
-                    {item.title[language]}
-                  </Title>
+         <Card style={styles.card}>
+  <Card.Content style={styles.cardContent}>
+    <View style={styles.imageContainer}>
+      <Image source={item.icon} style={styles.cardImage} />
+    </View>
+    <Title style={styles.cardTitle}>
+      {item.title[language]}
+    </Title>
 
-                  <Caption style={styles.cardCaption}>
-                    {item.caption[language]}
-                  </Caption>
-                </Card.Content>
-              </Card>
+    <Caption numberOfLines={5} style={styles.cardCaption}>
+      {item.caption[language]}
+    </Caption>
+  </Card.Content>
+</Card>
+
             </TouchableOpacity>
           )}
         />
       </ScrollView>
-      {/* </Background> */}
     </TouchableWithoutFeedback>
   );
 }
@@ -139,16 +139,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f8f8f8',
-    paddingTop: 20,
+    paddingTop: 10,
+    paddingBottom:10,
+    marginBottom: 0.120 * height,
   },
   titleContainer: {
     marginBottom: 5,
   },
   title: {
-    fontSize: 15,
+    fontSize: 30,
     textAlign: 'center',
-
-fontFamily:'Droid'
+    fontFamily: 'Droid',
   },
   row: {
     flexDirection: 'row',
@@ -173,7 +174,7 @@ fontFamily:'Droid'
   },
   imageContainer: {
     width: 100,
-    height: 80,
+    height: 70,
     borderRadius: 20,
     overflow: 'hidden',
     marginBottom: 5,
@@ -185,20 +186,22 @@ fontFamily:'Droid'
   },
   cardImage: {
     flex: 1,
-    width: '80%',
+    width: '70%',
     height: '70%',
     resizeMode: 'cover',
   },
   cardTitle: {
-    fontSize: 16,
+    fontSize: titlefontsize,
     textAlign: 'center',
     color: '#282534',
     fontFamily: 'Droid',
   },
   cardCaption: {
-    fontSize: 11,
+    fontSize: titlefontsize * 0.8,
     textAlign: 'center',
     color: '#51117f',
     fontFamily: 'Droid',
+    lineHeight: 18, // Adjust as needed
   },
+  
 });

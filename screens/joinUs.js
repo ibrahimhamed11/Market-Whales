@@ -142,7 +142,7 @@ const JoinUs = () => {
                   <Card
                     style={[
                       styles.card,
-                      { backgroundColor: COLORS.darkPurple },
+                      { backgroundColor: COLORS.gray },
                     ]}
                   >
                     <Animated.View
@@ -181,7 +181,7 @@ const JoinUs = () => {
                   <Card
                     style={[
                       styles.card,
-                      { backgroundColor: COLORS.darkPurple },
+                      { backgroundColor: COLORS.gray },
                     ]}
                   >
                     <Animated.View
@@ -215,7 +215,7 @@ const JoinUs = () => {
                   <Card
                     style={[
                       styles.card,
-                      { backgroundColor: COLORS.darkPurple },
+                      { backgroundColor: COLORS.gray },
                     ]}
                   >
                     <Animated.View

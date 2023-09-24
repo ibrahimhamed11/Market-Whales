@@ -1,44 +1,39 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, } from 'react-native';
+import { View, TouchableOpacity, Text, Dimensions } from 'react-native';
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
-// import { Divider } from 'react-native-paper';
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const MenuItem = ({ names, iconName, onPress, language, spacing }) => {
   const displayName = language === 'ar' ? names[0] : names[1];
 
   return (
-    <> 
-     <TouchableOpacity onPress={onPress}>
-      <View
-        style={{
-          flexDirection: language === 'ar' ? 'row' : 'row-reverse',
-          alignItems: 'center',
-          marginBottom: spacing,
-          marginRight: language === 'ar' ? 0 : 20,
-          marginLeft: 20,
-        }}
-      >
-        <FontAwesomeIcon
-          name={iconName}
-          size={25}
+    <>
+      <TouchableOpacity onPress={onPress}>
+        <View
           style={{
-            marginRight: language === 'ar' ? 15 : 15,
-            marginLeft: 15,
-            color:'blue',
-            color: iconName === 'sign-out' ? '#BE1313' : '#51117f',
+            flexDirection: language === 'ar' ? 'row' : 'row-reverse',
+            alignItems: 'center',
+            marginBottom: spacing,
+            marginRight: language === 'ar' ? 0 : SCREEN_WIDTH * 0.05,
+            marginLeft: SCREEN_WIDTH * 0.05,
           }}
-        />
-        <Text style={{ fontFamily: 'Droid', fontSize: 18, color: iconName === 'sign-out' ? '#BE1313' : '#51117f' }}>
-          {displayName}
-        </Text>
-      </View>
-   
-
-    </TouchableOpacity>
-
-{/* <Divider style={{ marginHorizontal: 10 }} /> */}
-</>
-  
+        >
+          <FontAwesomeIcon
+            name={iconName}
+            size={SCREEN_WIDTH * 0.07}
+            style={{
+              marginRight: language === 'ar' ? SCREEN_WIDTH * 0.02 : SCREEN_WIDTH * 0.02,
+              marginLeft: SCREEN_WIDTH * 0.02,
+              color: iconName === 'sign-out' ? '#BE1313' : '#51117f',
+            }}
+          />
+          <Text style={{ fontFamily: 'Droid', fontSize: SCREEN_WIDTH * 0.04, color: iconName === 'sign-out' ? '#BE1313' : '#51117f' }}>
+            {displayName}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </>
   );
 };
 
