@@ -22,7 +22,12 @@ import COLORS from "../colors/colors";
 
  import { loginUser } from '../utils/api/Auth'
 import { useSelector } from 'react-redux'; // Add this import
-
+import {
+  ALERT_TYPE,
+  Dialog,
+  AlertNotificationRoot,
+  Toast,
+} from "react-native-alert-notification";
 // Validation Functions
 const emailValidator = (email, language) => {
   const emailRegex = /\S+@\S+\.\S+/;
@@ -67,39 +72,53 @@ export default function LoginScreen({ navigation }) {
 
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
+  const [message, setMessage] = useState(""); // New state for message
+
+
+
   const language = useSelector(state => state.Localization.language);
+
+
+
+
 
   const onLoginPressed = async () => {
     try {
-      // Validate email and password
       const emailError = emailValidator(email.value, language);
       const passwordError = passwordValidator(password.value, language);
   
       if (emailError || passwordError) {
-        // Set error states
         setEmail(prevEmail => ({ ...prevEmail, error: emailError }));
         setPassword(prevPassword => ({ ...prevPassword, error: passwordError }));
         return;
       }
   
-      // Attempt login
       const { token, user, error } = await loginUser(email.value, password.value);
   
       if (error) {
-        // Handle login error
-        Alert.alert("Login Error", error);
+        setMessage(language === 'ar' ? 'بريد إلكتروني أو كلمة مرور غير صالحة' : 'Invalid Email or Password');
       } else {
-        // Reset navigation to Home screen
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "Home" }],
+ 
+  
+
+        Toast.show({
+          type: ALERT_TYPE.SUCCESS,
+          title: "Success",
+          textBody: language === 'ar' ? 'تم تسجيل الدخول بنجاح.' : 'Login successfully.',
         });
   
-        // Notify user of successful login
-        alert("تم تسجيل الدخول بنجاح.");
+        setTimeout(() => {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Home" }],
+          });
+        }, 1500);
+
+
+       
       }
     } catch (error) {
-      console.error(error); // Log unexpected errors
+      console.error(error); 
     }
   };
   
@@ -112,6 +131,8 @@ export default function LoginScreen({ navigation }) {
   const buttonWidth = Dimensions.get("window").width * 0.4;
 
   return (
+    <AlertNotificationRoot theme="dark">
+
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <View style={styles.container}>
         <Background>
@@ -120,8 +141,15 @@ export default function LoginScreen({ navigation }) {
           <Header
             style={[styles.arabicText, { fontFamily: "Droid", fontSize: 20 }]}
           >
-            {language === 'ar' ? 'مرحبا بك مجدداً.' : 'Welcome back.'}
+            {(language === 'ar' ? 'مرحبا بك مجدداً.' : 'Welcome back.')}
           </Header>
+
+          <Header
+            style={[styles.arabicText, { fontFamily: "Droid", fontSize: 15,color:'red' }]}
+          >
+            {message }
+          </Header>
+
           <TextInput
             label={language === 'ar' ? "البريد الإلكتروني" : "Email"}
             returnKeyType="next"
@@ -200,6 +228,8 @@ export default function LoginScreen({ navigation }) {
         </Background>
       </View>
     </TouchableWithoutFeedback>
+    </AlertNotificationRoot>
+
   );
 }
 

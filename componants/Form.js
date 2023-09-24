@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native'
 // import { useNavigation } from '@react-navigation/native';
 const Form = (props) => {
-    console.log(props)
     const [input, setInput] = useState('');
     // const nav = useNavigation();
     function save() {

@@ -28,7 +28,7 @@ const MenuItem = ({ names, iconName, onPress, language, spacing }) => {
             color: iconName === 'sign-out' ? '#BE1313' : '#51117f',
           }}
         />
-        <Text style={{ fontFamily: 'Droid', fontSize: 20, color: iconName === 'sign-out' ? '#BE1313' : '#51117f' }}>
+        <Text style={{ fontFamily: 'Droid', fontSize: 18, color: iconName === 'sign-out' ? '#BE1313' : '#51117f' }}>
           {displayName}
         </Text>
       </View>

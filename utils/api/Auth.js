@@ -11,19 +11,19 @@ const loginUser = async (email, password) => {
 
     const { token, status, error } = response.data;
     if (status === 200) {
-      console.log('res ', response);
 
       // Decode the token to get user information
       const decodedToken = jwt_decode(token);
       const userRole = decodedToken.role;
+   const userId=decodedToken.userId;
 
       // Store the token and user role in AsyncStorage
       await AsyncStorage.setItem("token", token);
       await AsyncStorage.setItem("userRole", userRole);
-      // const userRolea = await AsyncStorage.getItem("userRole");
+       await AsyncStorage.setItem("userId", userId);
+
 
       // // Print the user role for testing
-      // console.log("User Role:", userRolea);
 
       return { token, userRole, error: null };
     } else {

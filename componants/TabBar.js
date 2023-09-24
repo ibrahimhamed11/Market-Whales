@@ -14,6 +14,7 @@ import Animated, {
 
 import * as Font from "expo-font";
 import Sellerprofile from "../screens/SellerProfile";
+import DevelopmentScreen from '../screens/devlopment';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Home from "../screens/Home";
 
@@ -180,25 +181,25 @@ const TabBar = () => {
           tabBarActiveBackgroundColor: "",
         })}
       >
-
-<Tab.Screen
-  name={language === 'ar' ? 'التوصيات' : 'Signals'}
-  component={role === 'user' ? Sellerprofile : Sellerprofile}
-  options={{ headerShown: false }}
-/>
-<Tab.Screen
-  name={language === 'ar' ? 'المجتمع' : 'Community'}
-  component={Sellerprofile}
-  options={{ headerShown: false }}
-/>
 <Tab.Screen
   name={language === 'ar' ? 'الرئيسيه' : 'Home'}
   component={Home}
   options={{ headerShown: false }}
 />
 <Tab.Screen
+  name={language === 'ar' ? 'التوصيات' : 'Signals'}
+  component={role === 'user' ? DevelopmentScreen : DevelopmentScreen}
+  options={{ headerShown: false }}
+/>
+<Tab.Screen
+  name={language === 'ar' ? 'المجتمع' : 'Community'}
+  component={DevelopmentScreen}
+  options={{ headerShown: false }}
+/>
+
+<Tab.Screen
   name={language === 'ar' ? 'المتجر' : 'Market'}
-  component={Sellerprofile}
+  component={DevelopmentScreen}
   options={{ headerShown: false }}
 />
 <Tab.Screen
@@ -217,6 +218,8 @@ const TabBar = () => {
 
 
   } else {
+
+
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({

@@ -9,22 +9,59 @@ import {
   ImageBackground 
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import {  Alert, Dimensions } from 'react-native';
 
 import MenuItem from "./MenuItem ";
 import { useNavigation } from '@react-navigation/native';
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import ip from "../ipConfig";
+import {getUserById} from '../utils/api/user'
 function CustomDrawerContent(props) {
 
 const language = useSelector((state) => state.Localization.language);
+const [username, setUsername] = useState(""); // New state for message
+const [profileImg, setprofileImg] = useState(); // New state for message
+
+const retrieveUserData = async () => {
+  try {
+    const userId = await AsyncStorage.getItem("userId");
+    const token = await AsyncStorage.getItem("token");
+
+    return { userId, token };
+  } catch (error) {
+    console.log("Error retrieving data:", error);
+    throw error;
+  }
+};
+
+const getUserData = async () => {
+  try {
+    const { userId, token } = await retrieveUserData();
+    const userData = await getUserById(userId, token);
+    return userData;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};
+
+// Example of using getUserData
+getUserData()
+  .then(userData => {
+setUsername(userData.data.name)
+setprofileImg(userData.data.image)
+  })
+  .catch(error => {
+    console.error("Error:", error);
+  });
 
 
-
-
+  
   const staticText = {
     en: {
       darkMode: "Dark Mode",
       arabicLanguage: "Arabic Language",
-      userName: "Ibrahim Hamed",
+      userName: username,
       profileSettings: "Your Profile",
       logout: "Logout",
       setings:"Setings"
@@ -32,7 +69,7 @@ const language = useSelector((state) => state.Localization.language);
     ar: {
       darkMode: "الوضع الليلي",
       arabicLanguage: "اللغة العربية",
-      userName: "Ibrahim Hamed",
+      userName: username,
       profileSettings: "ملفك الشخصي",
       logout: "تسجيل الخروج",
       setings:"الاعدادات"
@@ -41,38 +78,38 @@ const language = useSelector((state) => state.Localization.language);
   };
 
   const text = staticText[language];
-  const navigation = useNavigation(); // Get the navigation object
+  const navigation = useNavigation();
 
   const handleProfileSettings = () => {
-    navigation.navigate('JoinUs'); 
+    navigation.navigate('DevelopmentScreen'); 
   };
 
   const handleSignals = () => {
-    // Function for handling signals
+    navigation.navigate('DevelopmentScreen'); 
   };
 
   const handleContactUs = () => {
-    // Function for handling contact us
+    navigation.navigate('DevelopmentScreen'); 
   };
 
   const handleBlogs = () => {
-    // Function for handling blogs
+    navigation.navigate('DevelopmentScreen'); 
   };
 
   const handleCalendar = () => {
-    // Function for handling calendar
+    navigation.navigate('DevelopmentScreen'); 
   };
 
   const handleMarketPrice = () => {
-    // Function for handling market price
+    navigation.navigate('DevelopmentScreen'); 
   };
 
   const handleChart = () => {
-    // Function for handling chart
+    navigation.navigate('TradingView'); 
   };
 
   const handleCourses = () => {
-    // Function for handling courses
+    navigation.navigate('DevelopmentScreen'); 
   };
 
   const handleSettings = () => {
@@ -80,10 +117,46 @@ const language = useSelector((state) => state.Localization.language);
   };
 
   const handleLogout = () => {
-    // Function for handling logout
+  
+    const strings = {
+      en: {
+        logoutTitle: 'Logout',
+        logoutMessage: 'Are you sure you want to logout?',
+        cancel: 'Cancel',
+        logout: 'Logout'
+      },
+      ar: {
+        logoutTitle: 'تسجيل الخروج',
+        logoutMessage: 'هل أنت متأكد أنك ترغب في تسجيل الخروج؟',
+        cancel: 'إلغاء',
+        logout: 'تسجيل الخروج'
+      }
+    };
+  
+    Alert.alert(
+      strings[language].logoutTitle,
+      strings[language].logoutMessage,
+      [
+        {
+          text: strings[language].cancel,
+          style: 'cancel',
+        },
+        {
+          text: strings[language].logout,
+          onPress: async () => {
+            try {
+              await AsyncStorage.clear();
+              console.log('local storage cleared');
+            } catch (error) {
+              console.log('failed to clear local storage', error);
+            }
+            navigation.navigate('Login');
+          },
+        },
+      ],
+    );
   };
-
-
+  
 
   const menuItems = [
     { names: ['ملفك الشخصي', 'Your Profile'], iconName: 'user', onPress: handleProfileSettings },
@@ -99,7 +172,26 @@ const language = useSelector((state) => state.Localization.language);
   ];
 
 
+  const ProfileImage = ( ip, profileImg ) => {
+    let source;
+    if (profileImg !== './uploads/user.webp') {
+      source = { uri: `${ip}/${profileImg}` };
+    } else {
+      source = require('../assets/user.png'); 
+    }
+
+    return source;
+  };
+  const source = ProfileImage(ip, profileImg);
+  
+  
+
+
+
+    
   return (
+
+    
     <DrawerContentScrollView {...props}>
 <ImageBackground 
   source={require('../assets/user2.png')} 
@@ -113,15 +205,14 @@ const language = useSelector((state) => state.Localization.language);
   }}
 >
   <View style={{ flexDirection: language === 'en' ? 'row-reverse' : 'row', alignItems: 'center', margin:20, padding: 2 }}>
-    <Image
-      source={require("../assets/userimage.png")}
-      style={{
-        width: 60,
-        height: 60,
-        borderRadius: 52, 
-     
-      }}
-    />
+  <Image
+        source={source}
+        style={{
+          width: 60,
+          height: 60,
+          borderRadius: 30, 
+        }}
+      />
  <Text
   style={{
     fontFamily: "Droid",
@@ -149,7 +240,7 @@ const language = useSelector((state) => state.Localization.language);
           iconName={item.iconName}
           onPress={item.onPress}
           language={language}
-          spacing={index === menuItems.length - 1 ? 5 : 30} 
+          spacing={index === menuItems.length - 1 ? 5 : 28} 
         />
       ))}
     </View>

@@ -12,3 +12,19 @@ export const registerUser = async (formData) => {
     throw error;
   }
 };
+
+
+
+export const getUserById = async (userId, authToken) => {
+
+  try {
+    const response = await axiosInstance.get(`/user/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

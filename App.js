@@ -26,6 +26,10 @@ import Notfications from './screens/Notfications'
 import PhoneAuth from './screens/phoneAuth'
 import PaymentScreen from './screens/PaymentScreen';
 import TradingViewChart from './screens/TradingView';
+import DevelopmentScreen from './screens/devlopment';
+
+
+
 import { FontAwesome } from '@expo/vector-icons';
 import Setings from './screens/Setings'
 
@@ -141,7 +145,12 @@ export default function App() {
           () => (
 
             <>
-            <TouchableHighlight onPress={() => handleNotificationPress()} underlayColor="rgba(0,0,0,0.2)">
+<TouchableHighlight
+  onPress={() => {
+    navigation.navigate('Notfications');
+  }}
+  underlayColor="rgba(0,0,0,0.2)"
+>
               <FontAwesome
                 name='bell'
                 size={24}
@@ -172,7 +181,7 @@ export default function App() {
       headerRight: isRTL ? 
         () => (
           <>
-          <TouchableHighlight onPress={() => handleNotificationPress()} underlayColor="rgba(0,0,0,0.2)">
+          <TouchableHighlight onPress={() => navigation.navigate('Notfications')} underlayColor="rgba(0,0,0,0.2)">
             <FontAwesome
               name='bell'
               size={24}
@@ -239,47 +248,7 @@ export default function App() {
 
 
 
-{/* 
 
-      <Drawer.Screen
-        name={language === 'en' ? 'Contact Us' : 'تواصل معنا'}
-        component={Notfications}
-        options={{
-       
-          drawerLabel: ({ focused }) => (
-            <Text style={{ fontFamily: 'Droid', fontWeight: focused ? 'bold' : 'normal' }}>
-              {language === 'en' ? 'Contact Us' : 'تواصل معنا'}
-            </Text>
-          ),
-          drawerActiveBackgroundColor: '#76005e50',
-          drawerActiveTintColor: '#ffffff',
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: '#76005f',
-          },
-          headerTintColor: 'white',
-        }}
-      />
-      <Drawer.Screen
-        name={language === 'en' ? 'Notifications' : 'الاشعارات'}
-        component={Notfications}
-        options={{
-      
-          headerShown: true,
-          headerTitle: '',
-          headerStyle: {
-            backgroundColor: '#76005f',
-          },
-          headerTintColor: 'white',
-          drawerLabel: ({ focused }) => (
-            <Text style={{ fontFamily: 'Droid', fontWeight: focused ? 'bold' : 'normal' }}>
-              {language === 'en' ? 'Notifications' : 'الاشعارات'}
-            </Text>
-          ),
-          drawerActiveBackgroundColor: '#76005e50',
-          drawerActiveTintColor: '#ffffff',
-        }}
-      /> */}
     </Drawer.Navigator>
   );
 }
@@ -306,7 +275,9 @@ export default function App() {
           <Stack.Screen name='PaymentScreen' component={PaymentScreen} options={{ headerShown: false }} /> 
           <Stack.Screen name='TradingView' component={TradingViewChart} options={{ headerShown: false }} />
           <Stack.Screen name='setings' component={Setings} options={{ headerTitle: "",  headerShown: true, }}/>
+          <Stack.Screen name='Notfications' component={Notfications} options={{ headerTitle: "",  headerShown: true, }}/>
 
+          <Stack.Screen name='DevelopmentScreen' component={DevelopmentScreen} options={{ headerTitle: "",  headerShown: true, }}/>
 
         </Stack.Navigator>
         <StatusBar style='auto' />
