@@ -6,6 +6,7 @@ const userLocale = Localization.locale;
 const LocalizationSlice = createSlice({
     name: 'localizationstat',
     initialState: {
+        
         language: userLocale.substring(0, 2), 
     },
     reducers: {

@@ -16,7 +16,14 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ip from "../ipConfig";
 import {getUserById} from '../utils/api/user'
+import { logout } from '../Redux/Slices/authSlice';
+
 function CustomDrawerContent(props) {
+
+  const navigation = useNavigation();
+
+  const dispatch = useDispatch();
+
 
 const language = useSelector((state) => state.Localization.language);
 const [username, setUsername] = useState(""); // New state for message
@@ -78,7 +85,6 @@ setprofileImg(userData.data.image)
   };
 
   const text = staticText[language];
-  const navigation = useNavigation();
 
   const handleProfileSettings = () => {
     navigation.navigate('DevelopmentScreen'); 
@@ -97,7 +103,7 @@ setprofileImg(userData.data.image)
   };
 
   const handleCalendar = () => {
-    navigation.navigate('DevelopmentScreen'); 
+    navigation.navigate('courses'); 
   };
 
   const handleMarketPrice = () => {
@@ -109,7 +115,7 @@ setprofileImg(userData.data.image)
   };
 
   const handleCourses = () => {
-    navigation.navigate('DevelopmentScreen'); 
+    navigation.navigate('courses'); 
   };
 
   const handleSettings = () => {
@@ -145,6 +151,8 @@ setprofileImg(userData.data.image)
           text: strings[language].logout,
           onPress: async () => {
             try {
+               dispatch(logout());
+
               await AsyncStorage.clear();
               console.log('local storage cleared');
             } catch (error) {
@@ -204,7 +212,7 @@ setprofileImg(userData.data.image)
 
   }}
 >
-  <View style={{ flexDirection: language === 'en' ? 'row-reverse' : 'row', alignItems: 'center', margin:20, padding: 2 }}>
+  <View style={{ flexDirection: language === 'ar' ? 'row-reverse' : 'row', alignItems: 'center', margin:20, padding: 2 }}>
   <Image
         source={source}
         style={{
@@ -231,7 +239,7 @@ setprofileImg(userData.data.image)
 </ImageBackground>
 
 
-<View style={{ marginTop: 30 }}>
+<View style={{ marginTop: 30,marginBottom:30 }}>
       {menuItems.map((item, index) => (
         <MenuItem
 

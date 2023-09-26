@@ -9,6 +9,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import { IconButton } from 'react-native-paper';
 import ip from '../ipConfig';
 import { DataTable } from 'react-native-paper';
+import {getUserById} from '../utils/api/user'
 
 const SellerProfileScreen = () => {
     const [orderModalVisible, setOrderModalVisible] = useState(false);
@@ -23,7 +24,6 @@ const SellerProfileScreen = () => {
     });
 
 
-    //order details
     const handleOrderDetails = (order) => {
         setSelectedOrder(order);
         setOrderModalVisible(true);
@@ -34,7 +34,6 @@ const SellerProfileScreen = () => {
     };
 
 
-    // Function to render the appropriate icon based on the order status
     const renderOrderStatusIcon = (status) => {
         switch (status) {
             case 'pending':
@@ -50,7 +49,7 @@ const SellerProfileScreen = () => {
         }
     };
 
-    // Function to render the order status text in Arabic
+
     const renderOrderStatusText = (status) => {
         switch (status) {
             case 'pending':
@@ -67,69 +66,31 @@ const SellerProfileScreen = () => {
     };
     //-----------------------------------------------------  
 
-    // Function to retrieve the ID from AsyncStorage
-    const getUserId = async () => {
-        try {
-            const sellerId = await AsyncStorage.getItem('userId');
-            return sellerId;
-        } catch (error) {
-            console.log('Error retrieving ID:', error);
-            return null;
-        }
-    };
 
-    const handleLogout = () => {
-        Alert.alert(
-            'تسجيل الخروج',
-            'هل أنت متأكد أنك ترغب في تسجيل الخروج؟',
-            [
-                {
-                    text: 'إلغاء',
-                    style: 'cancel',
-                },
-                {
-                    text: 'تسجيل الخروج',
-                    onPress: async () => {
-                        // Clear local storage
-                        try {
-                            await AsyncStorage.clear();
-                            console.log('localstorage cleard');
-                        } catch (error) {
-                            console.log('failed to clear local strorage', error);
-                        }
-                        // Redirect to the login screen
-                        navigation.navigate('Login'); // Replace 'Login' with the actual name of your login screen route
-                    },
-                },
-            ],
-            {
-                // Styling the alert
-                style: 'default', // 'default', 'secureText', or 'loginAndPassword'
-                titleStyle: {
-                    fontSize: 20,
-                    fontWeight: 'bold',
-                    textAlign: 'right',
-                },
-                messageStyle: {
-                    fontSize: 16,
-                    textAlign: 'right',
-                },
-                cancelButtonStyle: {
-                    backgroundColor: 'red',
-                },
-                cancelTextStyle: {
-                    color: 'white',
-                },
-                destructiveButtonStyle: {
-                    backgroundColor: 'red',
-                },
-                destructiveTextStyle: {
-                    color: 'white',
-                },
-                // Additional options...
-            }
-        );
-    };
+    const retrieveUserData = async () => {
+        try {
+          const userId = await AsyncStorage.getItem("userId");
+          const token = await AsyncStorage.getItem("token");
+      
+          return { userId, token };
+        } catch (error) {
+          console.log("Error retrieving data:", error);
+          throw error;
+        }
+      };
+      
+      const getUserData = async () => {
+        try {
+          const { userId, token } = await retrieveUserData();
+          const userData = await getUserById(userId, token);
+          return userData;
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          throw error;
+        }
+      };
+
+
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -144,80 +105,20 @@ const SellerProfileScreen = () => {
     useEffect(() => {
 
 
-        fetchOrders();
+        // fetchOrders();
     }, []);
 
-
-
-    const handleStatusChange = async (orderId, newStatus) => {
-        try {
-            await axios.put(`${ip}/orders/${orderId}`, { delStatus: newStatus });
-            fetchOrders();
-        } catch (error) {
-            console.log('Error updating status:', error);
-        }
-    };
-
-
-    const fetchOrders = async () => {
-        try {
-
-            const sellerId = await getUserId();
-            const response = await axios.get(`${ip}/orders/seller/${sellerId}`).then((res) => {
-                console.log("orderrrrrr", res.data.data)
-                setOrders(res.data.data)
-                // printUserId();
-            });
-            // setOrders(response.data);
-            // console.log(response.data);
-        } catch (error) {
-            console.error('Error fetching orders:', error);
-        }
-    };
 
 
     //navigate
     const navigation = useNavigation();
 
-    //Back End Connection
-    useEffect(() => {
-        fetchSellerDetails()
-            .then((data) => {
-                setSellerDetails(data);
-            })
-            .catch((error) => {
-                console.error('Error fetching seller details:', error);
-            });
-    }, []);
 
-    const fetchSellerDetails = async () => {
-        try {
 
-            const sellerId = await getUserId();
-            const response = await fetch(`${ip}/user/${sellerId}`);
-            if (response.ok) {
-
-                const data = await response.json();
-                console.log(data)
-
-                const sellerData = data.data
-                console.log(sellerData.image);
-
-                return sellerData;
-
-            } else {
-                throw new Error('Failed to fetch seller details');
-            }
-        } catch (error) {
-            throw new Error('Error fetching seller details: ' + error.message);
-        }
-    };
     const renderOrderItem = ({ item }) => {
         let statusButtons;
         let detailsbtn;
-        let orderNameTextColor;
 
-        //status
 
 
         detailsbtn = (
@@ -361,7 +262,6 @@ const SellerProfileScreen = () => {
                         />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', position: 'absolute', bottom: -50 }}>
-                        {/* <IconButton icon="logout" onPress={handleLogout} style={{ color: '#7600gf', backgroundColor: 'white' ,visibility:'hidden'}} /> */}
 
                         {sellerData.image ? (
                             <Image
@@ -375,7 +275,6 @@ const SellerProfileScreen = () => {
                                 style={{ width: 100, height: 100, borderRadius: 50, marginHorizontal: 20, borderColor: 'white', borderWidth: 4, marginLeft: 70 }}
                             />)}
 
-                        <IconButton icon="logout" onPress={handleLogout} style={{ color: '#7600gf', backgroundColor: 'white' }} />
                     </View>
                 </View>
                 <View style={{ position: 'absolute', top: 20, right: 20 }}>

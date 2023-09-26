@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   settingText: {
     flex: 1,
     fontFamily: 'Droid',
-    fontSize: 18,
+    fontSize: 14,
     marginLeft: 6,
   },
 });

@@ -17,11 +17,12 @@ import TextInput from "../componants/TextInput";
 import BackButton from "../componants/BackButton";
 import { theme } from "../componants/theme";
 import COLORS from "../colors/colors";
+import { login } from "../Redux/Slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native"; // Import useNavigation
 
+import { loginUser } from "../utils/api/Auth";
 
-
- import { loginUser } from '../utils/api/Auth'
-import { useSelector } from 'react-redux'; // Add this import
 import {
   ALERT_TYPE,
   Dialog,
@@ -29,37 +30,47 @@ import {
   Toast,
 } from "react-native-alert-notification";
 // Validation Functions
+
+
 const emailValidator = (email, language) => {
   const emailRegex = /\S+@\S+\.\S+/;
 
   if (!email) {
-    return language === 'ar' ? 'البريد الإلكتروني مطلوب.' : 'Email is required.';
+    return language === "ar"
+      ? "البريد الإلكتروني مطلوب."
+      : "Email is required.";
   }
 
   if (!emailRegex.test(email)) {
-    return language === 'ar' ? 'البريد الإلكتروني غير صالح.' : 'Invalid email.';
+    return language === "ar" ? "البريد الإلكتروني غير صالح." : "Invalid email.";
   }
 
-  return '';
+  return "";
 };
 
 const passwordValidator = (password, language) => {
   if (!password) {
-    return language === 'ar' ? 'كلمة المرور مطلوبة.' : 'Password is required.';
+    return language === "ar" ? "كلمة المرور مطلوبة." : "Password is required.";
   }
 
   if (password.length < 6) {
-    return language === 'ar' ? 'يجب أن تكون كلمة المرور على الأقل 6 أحرف.' : 'Password must be at least 6 characters.';
+    return language === "ar"
+      ? "يجب أن تكون كلمة المرور على الأقل 6 أحرف."
+      : "Password must be at least 6 characters.";
   }
 
-  return '';
+  return "";
 };
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
+  const navigation = useNavigation(); // Get the navigation object
+
+  const dispatch = useDispatch();
+
   //Font
   const loadFont = async () => {
     await Font.loadAsync({
-      'Droid': require('../assets/fonts/Droid.ttf'),
+      Droid: require("../assets/fonts/Droid.ttf"),
     });
     setIsFontLoaded(true);
   };
@@ -67,62 +78,61 @@ export default function LoginScreen({ navigation }) {
     loadFont().then(() => setIsFontLoaded(true));
   }, []);
 
-
-  
-
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const [message, setMessage] = useState(""); // New state for message
 
+  const language = useSelector((state) => state.Localization.language);
 
-
-  const language = useSelector(state => state.Localization.language);
-
-
-
-
+  const isAuthenticated = useSelector(
+    (state) => state.AuthSlice.isAuthenticated
+  );
 
   const onLoginPressed = async () => {
     try {
       const emailError = emailValidator(email.value, language);
       const passwordError = passwordValidator(password.value, language);
-  
+
       if (emailError || passwordError) {
-        setEmail(prevEmail => ({ ...prevEmail, error: emailError }));
-        setPassword(prevPassword => ({ ...prevPassword, error: passwordError }));
+        setEmail((prevEmail) => ({ ...prevEmail, error: emailError }));
+        setPassword((prevPassword) => ({
+          ...prevPassword,
+          error: passwordError,
+        }));
         return;
       }
-  
-      const { token, user, error } = await loginUser(email.value, password.value);
-  
+
+      const { token, user, error } = await loginUser(
+        email.value,
+        password.value
+      );
+
       if (error) {
-        setMessage(language === 'ar' ? 'بريد إلكتروني أو كلمة مرور غير صالحة' : 'Invalid Email or Password');
+        setMessage(
+          language === "ar"
+            ? "بريد إلكتروني أو كلمة مرور غير صالحة"
+            : "Invalid Email or Password"
+        );
       } else {
- 
-  
+        dispatch(login());
 
         Toast.show({
           type: ALERT_TYPE.SUCCESS,
           title: "Success",
-          textBody: language === 'ar' ? 'تم تسجيل الدخول بنجاح.' : 'Login successfully.',
+          textBody:
+            language === "ar"
+              ? "تم تسجيل الدخول بنجاح."
+              : "Login successfully.",
         });
-  
+
         setTimeout(() => {
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "Home" }],
-          });
+          navigation.navigate("Home");
         }, 1500);
-
-
-       
       }
     } catch (error) {
-      console.error(error); 
+      console.error(error);
     }
   };
-  
-
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
@@ -132,104 +142,117 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <AlertNotificationRoot theme="dark">
-
-    <TouchableWithoutFeedback onPress={dismissKeyboard}>
-      <View style={styles.container}>
-        <Background>
-          <BackButton goBack={navigation.goBack} />
-          <Logo />
-          <Header
-            style={[styles.arabicText, { fontFamily: "Droid", fontSize: 20 }]}
-          >
-            {(language === 'ar' ? 'مرحبا بك مجدداً.' : 'Welcome back.')}
-          </Header>
-
-          <Header
-            style={[styles.arabicText, { fontFamily: "Droid", fontSize: 15,color:'red' }]}
-          >
-            {message }
-          </Header>
-
-          <TextInput
-            label={language === 'ar' ? "البريد الإلكتروني" : "Email"}
-            returnKeyType="next"
-            value={email.value}
-            onChangeText={(text) => setEmail({ value: text, error: "" })}
-            error={!!email.error}
-            errorText={
-              <Text style={{ fontFamily: "Droid", color: "red" }}>
-                {email.error}
-              </Text>
-            }
-            autoCapitalize="none"
-            autoCompleteType="email"
-            textContentType="emailAddress"
-            keyboardType="email-address"
-            style={{ fontFamily: "Droid" }}
-          />
-
-          <TextInput
-            label={language === 'ar' ? "كلمة المرور" : "Password"}
-            returnKeyType="done"
-            value={password.value}
-            mode='outlined'
-            onChangeText={(text) => setPassword({ value: text, error: "" })}
-            error={!!password.error}
-            errorText={
-              <Text style={{ fontFamily: "Droid", color: "red" }}>
-                {password.error}
-              </Text>
-            }
-            direction ='rtl'
-            secureTextEntry
-            style={{ fontFamily: "Droid"}}
-          />
-
-          <View style={styles.forgotPassword}>
-            <TouchableOpacity onPress={() => navigation.navigate("joinus")}>
-              <Text style={[styles.arabicText, { fontFamily: "Droid" }]}>
-                {language === 'ar' ? "هل نسيت كلمة المرور؟" : "Forgot your password?"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={[styles.buttonConatiner]}>
-            <Button
-              mode="contained"
-              onPress={() => navigation.navigate("PhoneAuth")}
-              style={[styles.button, { width: 1.1 * buttonWidth }]}
+      <TouchableWithoutFeedback onPress={dismissKeyboard}>
+        <View style={styles.container}>
+          <Background>
+            <BackButton goBack={navigation.goBack} />
+            <Logo />
+            <Header
+              style={[styles.arabicText, { fontFamily: "Droid", fontSize: 20 }]}
             >
-              <Text style={[{ fontFamily: "Droid", color: "white" ,fontWeight: "bold"}]}>
-                {language === 'ar' ? "دخول بالهاتف" : "Login with Phone"}
-              </Text>
-            </Button>
+              {language === "ar" ? "مرحبا بك مجدداً." : "Welcome back."}
+            </Header>
 
-            <Button
-              mode="contained"
-              onPress={onLoginPressed}
-              style={[styles.LoginButton, { width: 1.1 * buttonWidth }]}
+            <Header
+              style={[
+                styles.arabicText,
+                { fontFamily: "Droid", fontSize: 15, color: "red" },
+              ]}
             >
-              <Text style={[{ fontFamily: "Droid", color: "white" ,fontWeight: "bold"}]}>
-                {language === 'ar' ? "تسجيل الدخول" : "Login"}
-              </Text>
-            </Button>
-          </View>
+              {message}
+            </Header>
 
-          <View style={[styles.row, styles.arabicText]}>
-            <Text style={{ fontFamily: "Droid", }}>
-              {language === 'ar' ? "ليس لديك حساب؟" : "Don't have an account?"}
-            </Text>
-            <TouchableOpacity onPress={() => navigation.replace("JoinUs")}>
-              <Text style={[styles.link, { fontWeight: "bold" }]}>
-                {language === 'ar' ? "التسجيل" : "Register"}
+            <TextInput
+              label={language === "ar" ? "البريد الإلكتروني" : "Email"}
+              returnKeyType="next"
+              value={email.value}
+              onChangeText={(text) => setEmail({ value: text, error: "" })}
+              error={!!email.error}
+              errorText={
+                <Text style={{ fontFamily: "Droid", color: "red" }}>
+                  {email.error}
+                </Text>
+              }
+              autoCapitalize="none"
+              autoCompleteType="email"
+              textContentType="emailAddress"
+              keyboardType="email-address"
+              style={{ fontFamily: "Droid" }}
+            />
+
+            <TextInput
+              label={language === "ar" ? "كلمة المرور" : "Password"}
+              returnKeyType="done"
+              value={password.value}
+              mode="outlined"
+              onChangeText={(text) => setPassword({ value: text, error: "" })}
+              error={!!password.error}
+              errorText={
+                <Text style={{ fontFamily: "Droid", color: "red" }}>
+                  {password.error}
+                </Text>
+              }
+              direction="rtl"
+              secureTextEntry
+              style={{ fontFamily: "Droid" }}
+            />
+
+            <View style={styles.forgotPassword}>
+              <TouchableOpacity onPress={() => navigation.navigate("joinus")}>
+                <Text style={[styles.arabicText, { fontFamily: "Droid" }]}>
+                  {language === "ar"
+                    ? "هل نسيت كلمة المرور؟"
+                    : "Forgot your password?"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={[styles.buttonConatiner]}>
+              <Button
+                mode="contained"
+                onPress={() => navigation.navigate("PhoneAuth")}
+                style={[styles.button, { width: 1.1 * buttonWidth }]}
+              >
+                <Text
+                  style={[
+                    { fontFamily: "Droid", color: "white", fontWeight: "bold" },
+                  ]}
+                >
+                  {language === "ar" ? "دخول بالهاتف" : "Login with Phone"}
+                </Text>
+              </Button>
+
+              <Button
+                mode="contained"
+                onPress={onLoginPressed}
+                style={[styles.LoginButton, { width: 1.1 * buttonWidth }]}
+              >
+                <Text
+                  style={[
+                    { fontFamily: "Droid", color: "white", fontWeight: "bold" },
+                  ]}
+                >
+                  {language === "ar" ? "تسجيل الدخول" : "Login"}
+                </Text>
+              </Button>
+            </View>
+
+            <View style={[styles.row, styles.arabicText]}>
+              <Text style={{ fontFamily: "Droid" }}>
+                {language === "ar"
+                  ? "ليس لديك حساب؟"
+                  : "Don't have an account?"}
               </Text>
-            </TouchableOpacity>
-          </View>
-        </Background>
-      </View>
-    </TouchableWithoutFeedback>
+              <TouchableOpacity onPress={() => navigation.replace("JoinUs")}>
+                <Text style={[styles.link, { fontWeight: "bold" }]}>
+                  {language === "ar" ? "التسجيل" : "Register"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </Background>
+        </View>
+      </TouchableWithoutFeedback>
     </AlertNotificationRoot>
-
   );
 }
 
@@ -254,18 +277,17 @@ const styles = StyleSheet.create({
   link: {
     fontWeight: "bold",
     color: theme.colors.primary,
-    marginLeft:'8%',
-    alignContent:'center',
-    textAlign:'center',
+    marginLeft: "8%",
+    alignContent: "center",
+    textAlign: "center",
     fontFamily: "Droid",
-
   },
   arabicText: {
     fontFamily: "Droid",
     textAlign: "right",
   },
   button: {
-    marginTop:'4%',
+    marginTop: "4%",
     fontWeight: "bold",
     fontSize: 13,
     fontFamily: "Droid",
@@ -276,20 +298,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   LoginButton: {
-
     fontWeight: "bold",
     fontSize: 14,
     fontFamily: "Droid",
     color: "white",
     paddingVertical: 5,
-    backgroundColor:COLORS.darkerMagenta,
+    backgroundColor: COLORS.darkerMagenta,
     borderRadius: 20,
     textAlign: "center",
     marginLeft: 8,
   },
   buttonConatiner: {
-    marginTop:'10%',
-marginBottom:'10%',
+    marginTop: "10%",
+    marginBottom: "10%",
     flexDirection: "row",
     alignItems: "center",
   },

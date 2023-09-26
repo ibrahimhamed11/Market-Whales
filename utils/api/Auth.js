@@ -2,7 +2,13 @@ import axiosInstance from './apiInstance';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwt_decode from "jwt-decode";
 
+
+
 const loginUser = async (email, password) => {
+
+
+
+
   try {
     const response = await axiosInstance.post(`/user/login`, {
       email: email,
@@ -16,6 +22,7 @@ const loginUser = async (email, password) => {
       const decodedToken = jwt_decode(token);
       const userRole = decodedToken.role;
    const userId=decodedToken.userId;
+
 
       // Store the token and user role in AsyncStorage
       await AsyncStorage.setItem("token", token);
@@ -32,6 +39,8 @@ const loginUser = async (email, password) => {
   } catch (error) {
     return { token: null, userRole: null, error: error.message };
   }
+
+  
 };
 
 export { loginUser };
