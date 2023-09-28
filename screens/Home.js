@@ -62,7 +62,7 @@ export default function StartScreen({ navigation }) {
         ar: 'يمكنك الاستفادة من المواد التعليمية التي يقدمها مجموعة من خبراء التداول' 
       },
       icon: require('../assets/home/course.png'), 
-      onPress: () =>  navigation.navigate('courses')
+      onPress: () =>  navigation.navigate('CoursesListScreen')
     },
     { 
       id: 5, 

@@ -24,8 +24,15 @@ import PhoneAuth from "./screens/phoneAuth";
 import PaymentScreen from "./screens/PaymentScreen";
 import TradingViewChart from "./screens/TradingView";
 import DevelopmentScreen from "./screens/devlopment";
-import VideoListScreen from "./screens/VideoListScreen";
-import VideoDetailScreen from "./screens/videoDetails";
+import VideoListScreen from "./screens/courses/VideoListScreen";
+import VideoDetailScreen from "./screens/courses/videoDetails";
+import CourseItem from "./screens/courses/CourseItem ";
+import CoursesListScreen from "./screens/courses/CoursesListScreen ";
+
+
+
+
+
 
 import { FontAwesome } from "@expo/vector-icons";
 import Setings from "./screens/Setings";
@@ -275,7 +282,7 @@ export default function App() {
               options={{ headerTitle: "", headerShown: true }}
             />
             <Stack.Screen
-              name="courses"
+              name="VideoListScreen"
               component={VideoListScreen}
               options={{ headerTitle: "", headerShown: true }}
             />
@@ -291,6 +298,22 @@ export default function App() {
               component={VideoDetailScreen}
               options={{ headerTitle: "", headerShown: true }}
             />
+
+            <Stack.Screen
+              name="CourseItem"
+              component={CourseItem}
+              options={{ headerTitle: "", headerShown: true }}
+            />
+                <Stack.Screen
+              name="CoursesListScreen"
+              component={CoursesListScreen}
+              options={{ headerTitle: "", headerShown: true }}
+            />
+
+
+
+
+
 
           </Stack.Navigator>
           <StatusBar style="auto" />
