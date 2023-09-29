@@ -1,135 +1,183 @@
-import React from 'react';
-import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
-import { Card, IconButton } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { Button } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native'; // Import navigation hook
+import React from "react";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { Card, Button } from "react-native-paper";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { useNavigation } from '@react-navigation/native';
 
 
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
 
-const CourseItem = ({ course, onPress }) => {
-    const navigation = useNavigation();
+const cardWidth = screenWidth * 0.45;
+const cardHeight = screenHeight * 0.56; 
+const maxCardHeight = 1.4*cardHeight 
+
+console.log(cardWidth)
+
+const CourseItem = ({ course, userCourses, onPress }) => {
+
+  const isCourseOwned = userCourses.includes(course._id);
+
+  const navigation = useNavigation();
+
+  const onPressButton = () => {
+    navigation.navigate('VideoListScreen', { playlistId: course.playlistId });
+  };
 
 
-    const onPressButton = () => {
-        // Navigate to another component and send playlist id in route params
-        navigation.navigate('VideoListScreen', { playlistId: course.playlistId });
-      };
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
-      <Card elevation={3} style={styles.card}>
-        <Card.Cover source={require('../../assets/course.png')} style={styles.cover} />
+    <View style={styles.container}>
+      <Card elevation={3} style={[styles.card, { width: cardWidth, height: cardHeight, maxHeight: maxCardHeight }]}>
+        <Card.Cover
+          source={require("../../assets/course.png")}
+          style={styles.cover}
+        />
         <Card.Content>
           <Text style={styles.title}>{course.name}</Text>
-          <Text>{course.description}</Text>
+
+          <Text  style={styles.description}>{course.description}</Text>
+
           <View style={styles.infoContainer}>
-            <View style={styles.infoRow}>
-              <Icon name="tag" size={24}  color="#0B6E6E" />
-              <Text style={styles.infoText}>{course.type}</Text>
-            </View>
-            <View style={styles.infoRow}>
-              <Icon name="dollar" size={30} color="#0A7E06" />
-              <Text style={styles.pricetext}>{course.price}</Text>
-            </View>
+            {isCourseOwned ? null : (
+              <View style={styles.infoRow}>
+                {course.price === 0 ? (
+                  <Text style={[styles.pricetext, styles.freeText]}>Free</Text>
+                ) : (
+                  <>
+                    <Icon name="dollar" size={25} color="#0A7E06" />
+                    <Text style={styles.pricetext}>{course.price}</Text>
+                  </>
+                )}
+              </View>
+            )}
           </View>
         </Card.Content>
-     
+
         <View style={styles.btnContainer}>
-        <Button
-            icon={() => <Icon name="star" size={20} color="#fff" />}
-            mode="contained"
-            onPress={onPressButton}
-            style={styles.button} // Use responsive styles
-          >
-         Details
-          </Button>
-          
-          <Button
-            icon={() => <Icon name="shopping-cart" size={20} color="#fff" />} // Font Awesome cart icon
-            mode="contained"
-            onPress={onPressButton}
-            style={styles.cartButton}
-          >
-            Add to Cart
-          </Button>
-          <Button
-            icon={() => <Icon name="credit-card" size={20} color="#fff" />} // Font Awesome credit card icon
-            mode="contained"
-            onPress={onPressButton}
-            style={styles.buyNowButton}
-          >
-            Buy Now
-          </Button>
+          {isCourseOwned ? (
+            <>
+              <View style={styles.purchased}>
+                <Text style={styles.purchasedtext}>You have purchased</Text>
+              </View>
+
+              <Button
+                icon={() => <Icon name="star" size={cardWidth*0.12} color="#fff" />}
+                mode="contained"
+                onPress={onPressButton}
+                style={styles.openbutton}
+              >
+                <Text style={styles.btntext}>Open</Text>
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                icon={() => (
+                  <Icon name="shopping-cart" size={cardWidth*0.12} color="#fff" />
+                )}
+                mode="contained"
+                onPress={onPressButton}
+                style={styles.cartButton}
+              >
+                <Text style={styles.btntext}>Add to cart</Text>
+              </Button>
+              <Button
+                icon={() => <Icon name="credit-card" size={cardWidth*0.12} color="#fff" />}
+                mode="contained"
+                onPress={onPressButton}
+                style={styles.buyNowButton}
+              >
+                <Text style={styles.btntext}>Buy now</Text>
+              </Button>
+            </>
+          )}
         </View>
       </Card>
-    </TouchableOpacity>
+    </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
     margin: 10,
-    width: '45%',
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: cardWidth*0.08,
+    fontWeight: "bold",
     marginBottom: 5,
+  },
+  description:{
+    fontSize: cardWidth*0.075,
+
   },
   infoContainer: {
     marginTop: 10,
   },
   infoRow: {
-    marginTop:10,
-    flexDirection: 'row',
-    alignItems: 'center',
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 5,
+    alignSelf: 'center',
   },
-
-  pricetext:{
-
-    marginLeft: 10,
-    color: 'green',
-    fontSize: 16,
-
-  },
-
   infoText: {
     marginLeft: 10,
-    color: 'red',
-    fontSize: 16,
+    color: "red",
+    fontSize: cardWidth*0.075,
   },
   card: {
     borderRadius: 10,
   },
   cover: {
-    height: 150,
+    marginBottom:5,
+    height: cardHeight*0.4,
   },
   btnContainer: {
-    // flexDirection:'row',
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
-    
   },
-  button: {
-    width: '60%', // Adjust as needed for responsiveness
-    backgroundColor: '#DA901B',
+  openbutton: {
+    width: "80%",
+    backgroundColor: "#0A7E06",
     borderRadius: 10,
-    marginBottom:5
-
+    marginBottom: 5,
   },
   cartButton: {
-    width: '60%',
-    backgroundColor: '#0B6E6E', // Adjust color as needed
+    width: "80%",
+    backgroundColor: "#0B6E6E",
     borderRadius: 10,
-    marginBottom:5
+    marginBottom: 5,
   },
   buyNowButton: {
-    width: '60%',
-    backgroundColor: '#0A7E06', // Adjust color as needed
+    width: "80%",
+    backgroundColor: "#DA901B", // Adjust color as needed
     borderRadius: 10,
-    marginBottom:5
+    marginBottom: 5,
+  },
+  btntext: {
+    fontSize: cardWidth*0.058,
+  },
+  freeText: {
+    color: "red",
+    fontSize:cardWidth*0.1,
+    marginLeft: 10,
+    fontWeight: "600",
+  },
+  pricetext: {
+    marginLeft: 10,
+    color: "green",
+    fontSize: cardWidth*0.09,
+    fontWeight: "700",
+  },
+  purchased: {
+    marginBottom: 20,
+  },
+  purchasedtext: {
+    fontSize: cardWidth*0.070,
+    color: "green",
+    fontWeight: "700",
   },
 
 });

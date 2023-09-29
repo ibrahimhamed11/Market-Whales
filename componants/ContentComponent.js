@@ -115,7 +115,7 @@ setprofileImg(userData.data.image)
   };
 
   const handleCourses = () => {
-    navigation.navigate('courses'); 
+    navigation.navigate('CoursesListScreen'); 
   };
 
   const handleSettings = () => {

@@ -1,42 +1,47 @@
-// CoursesListScreen.js
-import React from 'react';
-import { View, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView } from 'react-native';
 import CourseItem from './CourseItem ';
-
-
-const coursesData = [
-  {
-    id: 1,
-    name: 'Course 1',
-    description: 'Description for Course 1',
-    type: 'Paid',
-    price: 99.99,
-    image: '../../assets/course.png',
-    playlistId:'PLOwj-wNPlOZmidIYxxDjXtpww4uMk2pQQ'
-  },
-  {
-    id: 2,
-    name: 'Course 2',
-    description: 'Description for Course 2',
-    type: 'Free',
-    price: 0,
-    image: '../../assets/course.png',
-    playlistId:'PLOwj-wNPlOZmidIYxxDjXtpww4uMk2pQQ'
-
-  },
-  // Add more courses here
-];
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAll } from '../../utils/api/courses'
+import { getUserById } from '../../utils/api/user'
+import jwt_decode from "jwt-decode";
+import Background from '../../componants/Background'
 const CoursesListScreen = () => {
+  const [coursesList, setCoursesList] = useState([]);
+  const [userCourses, setUserCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+
+        const decodedToken = jwt_decode(token);
+        const userId = decodedToken.userId;
+
+        const userData = { token };
+
+        const coursesList = await getAll(userData.token);
+        setCoursesList(coursesList);
+
+        const userCoursesResponse = await getUserById(userId, token);
+        setUserCourses(userCoursesResponse.data.boughtCourses);
+
+        console.log(userCourses);
+      } catch (error) {
+        console.log("Error fetching courses list:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-      <FlatList
-        data={coursesData}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <CourseItem course={item} />}
-        numColumns={2}
-      />
-    </View>
+    <ScrollView contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      
+      {coursesList.map(item => (
+        <CourseItem key={item._id} course={item} userCourses={userCourses} />
+      ))}
+    </ScrollView>
   );
 };
 
