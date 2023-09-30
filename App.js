@@ -7,10 +7,10 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Text, View, Dimensions } from "react-native";
 import { StripeProvider } from "@stripe/stripe-react-native";
-import { Card } from "react-native-paper"; // Import the Card component
 import COLORS from "./colors/colors";
 import CustomDrawerContent from "./componants/ContentComponent";
-import socket from './socket'; // Import the global socket
+import socket from './utils/socket'; // Import the global socket
+
 
 //Screens
 import Login from "./screens/Login";
@@ -23,13 +23,14 @@ import SellerProfile from "./screens/SellerProfile";
 import Notfications from "./screens/Notfications";
 import PhoneAuth from "./screens/phoneAuth";
 import PaymentScreen from "./screens/PaymentScreen";
-import TradingViewChart from "./screens/TradingView";
+import TradingViewChart from "./screens/liveChart/TradingView";
 import DevelopmentScreen from "./screens/devlopment";
 import VideoListScreen from "./screens/courses/VideoListScreen";
 import VideoDetailScreen from "./screens/courses/videoDetails";
 import CourseItem from "./screens/courses/CourseItem ";
 import CoursesListScreen from "./screens/courses/CoursesListScreen ";
-import prices from "./screens/prices";
+import prices from "./screens/marketPrices/prices";
+
 
 
 
@@ -41,7 +42,7 @@ import Setings from "./screens/Setings";
 LogBox.ignoreAllLogs();
 //redux
 import { Store } from "./Redux/Store";
-const isAuthenticated = Store.getState().AuthSlice.isAuthenticated;
+// const isAuthenticated = Store.getState().AuthSlice.isAuthenticated;
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -315,15 +316,11 @@ export default function App() {
               options={{ headerTitle: "", headerShown: true }}
             />
 
-<Stack.Screen
+             <Stack.Screen
               name="prices"
               component={prices}
               options={{ headerTitle: "", headerShown: true }}
             />
-
-
-
-
 
 
           </Stack.Navigator>
