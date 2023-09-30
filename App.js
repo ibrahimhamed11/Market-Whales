@@ -10,6 +10,7 @@ import { StripeProvider } from "@stripe/stripe-react-native";
 import { Card } from "react-native-paper"; // Import the Card component
 import COLORS from "./colors/colors";
 import CustomDrawerContent from "./componants/ContentComponent";
+import socket from './socket'; // Import the global socket
 
 //Screens
 import Login from "./screens/Login";
@@ -28,7 +29,7 @@ import VideoListScreen from "./screens/courses/VideoListScreen";
 import VideoDetailScreen from "./screens/courses/videoDetails";
 import CourseItem from "./screens/courses/CourseItem ";
 import CoursesListScreen from "./screens/courses/CoursesListScreen ";
-
+import prices from "./screens/prices";
 
 
 
@@ -46,6 +47,10 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export default function App() {
+
+
+  socket.connect(); // Start the socket connection
+
   //Font
   const loadFont = async () => {
     await Font.loadAsync({
@@ -307,6 +312,12 @@ export default function App() {
                 <Stack.Screen
               name="CoursesListScreen"
               component={CoursesListScreen}
+              options={{ headerTitle: "", headerShown: true }}
+            />
+
+<Stack.Screen
+              name="prices"
+              component={prices}
               options={{ headerTitle: "", headerShown: true }}
             />
 

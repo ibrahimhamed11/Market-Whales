@@ -107,7 +107,7 @@ setprofileImg(userData.data.image)
   };
 
   const handleMarketPrice = () => {
-    navigation.navigate('DevelopmentScreen'); 
+    navigation.navigate('prices'); 
   };
 
   const handleChart = () => {
