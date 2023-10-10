@@ -52,7 +52,7 @@ export default function StartScreen({ navigation }) {
         ar: 'يمكنك متابعة نخبة من المحللين الفنيين ودخول فرص قوية مع السوق' 
       },
       icon: require('../assets/home/signals.png'), 
-      onPress: () => navigation.navigate('DevelopmentScreen')
+      onPress: () => navigation.navigate('Signals')
     },
     { 
       id: 4, 

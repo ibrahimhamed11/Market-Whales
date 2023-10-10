@@ -30,7 +30,7 @@ import VideoDetailScreen from "./screens/courses/videoDetails";
 import CourseItem from "./screens/courses/CourseItem ";
 import CoursesListScreen from "./screens/courses/CoursesListScreen ";
 import prices from "./screens/marketPrices/prices";
-
+import Signals from "./screens/signals/Signals";
 
 
 
@@ -319,6 +319,11 @@ export default function App() {
              <Stack.Screen
               name="prices"
               component={prices}
+              options={{ headerTitle: "", headerShown: true }}
+            />
+                <Stack.Screen
+              name="signals"
+              component={Signals}
               options={{ headerTitle: "", headerShown: true }}
             />
 

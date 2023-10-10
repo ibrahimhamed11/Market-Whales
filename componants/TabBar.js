@@ -17,7 +17,7 @@ import Sellerprofile from "../screens/SellerProfile";
 import DevelopmentScreen from '../screens/devlopment';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Home from "../screens/Home";
-
+import Signals from "../screens/signals/Signals";
 const CustomTabBarIcon = ({
   iconName,
   iconSize,
@@ -188,7 +188,7 @@ const TabBar = () => {
 />
 <Tab.Screen
   name={language === 'ar' ? 'التوصيات' : 'Signals'}
-  component={role === 'user' ? DevelopmentScreen : DevelopmentScreen}
+  component={role === 'user' ? Signals : Signals}
   options={{ headerShown: false }}
 />
 <Tab.Screen

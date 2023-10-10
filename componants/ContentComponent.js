@@ -91,7 +91,7 @@ setprofileImg(userData.data.image)
   };
 
   const handleSignals = () => {
-    navigation.navigate('DevelopmentScreen'); 
+    navigation.navigate('Signals'); 
   };
 
   const handleContactUs = () => {
