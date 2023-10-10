@@ -108,23 +108,18 @@ const TabBar = () => {
     return null;
   }
 
-  
-  if (role == "client") {
+  if (role == "client"||"admin") {
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color, focused, size }) => {
             let iconName;
-    
             if (route.name === "الرئيسيه"|| route.name === "Home") {
               iconName = "home";
               label = language === "ar" ? "الرئيسية" : "Home";
             } else if (route.name === "المجتمع" || route.name === "Community") {
               iconName = "newspaper-o";
               label = language === "ar" ? "المجتمع" : "Community";
-
-
-
             } else if (route.name === "المتجر" || route.name === "Market") {
               iconName = "shopping-cart";
               label = language === "ar" ? "المتجر" : "Market";
@@ -135,10 +130,7 @@ const TabBar = () => {
               iconName = "area-chart";
               label = language === "ar" ? "التوصيات" : "Signals";
             }
-
-
-
-
+            
             const iconSize = focused ? size * 1.6 : size;
 
             return (
@@ -220,87 +212,7 @@ const TabBar = () => {
   } else {
 
 
-    return (
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, focused, size }) => {
-            let iconName;
-            if (route.name === "المتجر"||"Market") {
-              iconName = focused ? "shopping-cart" : "shopping-cart";
-            } else if (route.name === "الملف الشخصي") {
-              iconName = focused ? "user" : "user";
-            } else if (route.name === "منتجاتي") {
-              iconName = focused ? "shopping-basket" : "shopping-basket";
-            }
-            return <Icon name={iconName} color={color} size={size * 0.8} />;
-          },
 
-          tabBarActiveTintColor: COLORS.darkerPurple,
-          tabBarInactiveTintColor: "#292726c2",
-
-          tabBarStyle: {
-            borderWidth: 10,
-
-            height: 60,
-            position: "absolute",
-            bottom: 5,
-            left: 10,
-            right: 10,
-            borderRadius: 25,
-            paddingBottom: 5,
-            shadowColor: "#0b0323",
-            shadowOffset: {
-              width: 10,
-              height: 10,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.5,
-            elevation: 5,
-          },
-
-          tabBarLabelStyle: [styles.customText, { fontSize: 11 }],
-          tabBarIconStyle: {
-            marginTop: 5,
-          },
-          tabBarActiveBackgroundColor: {},
-        })}
-        tabBarOptions={{}}
-      >
-        <Tab.Screen
-          name="الرئيسيه"
-          component={Sellerprofile}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="المدونات"
-          component={Sellerprofile}
-          options={{ headerShown: false }}
-        />
-        {/* <Tab.Screen
-          name='الملف الشخصي'
-          component={role === 'mother' ? ProfileScreen : Sellerprofile}
-          options={{ headerShown: false }}
-        /> */}
-        <Tab.Screen
-          name="المتجر"
-          component={Sellerprofile}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="منتجاتي"
-          component={Sellerprofile}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="السله"
-          component={Sellerprofile}
-          options={{
-            tabBarBadge: data.cart.length > 0 ? data.cart.length : null,
-            headerShown: false,
-          }}
-        />
-      </Tab.Navigator>
-    );
   }
 };
 

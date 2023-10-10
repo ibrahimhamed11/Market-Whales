@@ -326,6 +326,13 @@ export default function App() {
               component={Signals}
               options={{ headerTitle: "", headerShown: true }}
             />
+            
+
+            <Stack.Screen
+              name="Notfications"
+              component={Notfications}
+              options={{ headerTitle: "", headerShown: true }}
+            />
 
 
           </Stack.Navigator>
