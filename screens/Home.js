@@ -5,14 +5,15 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
 import Background from '../componants/Background';
-
+import { color } from 'react-native-reanimated';
+import COLORS from '../colors/colors';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
 console.log(height)
 const cardWidth = (width - 40) / 2;
-const cardHeight = width/1.75;
+const cardHeight = height/4.2;
 
 const titlefontsize=width * 0.03
 
@@ -52,7 +53,7 @@ export default function StartScreen({ navigation }) {
         ar: 'يمكنك متابعة نخبة من المحللين الفنيين ودخول فرص قوية مع السوق' 
       },
       icon: require('../assets/home/signals.png'), 
-      onPress: () => navigation.navigate('Signals')
+      onPress: () => navigation.navigate('signals')
     },
     { 
       id: 4, 
@@ -135,12 +136,12 @@ export default function StartScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f8f8f8',
+    backgroundColor:COLORS.gray,
     paddingTop: 10,
-    paddingBottom:10,
+     paddingBottom:10,
     marginBottom: 0.120 * height,
   },
   titleContainer: {

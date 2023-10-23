@@ -20,9 +20,7 @@ import COLORS from "../colors/colors";
 import { login } from "../Redux/Slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native"; // Import useNavigation
-
 import { loginUser } from "../utils/api/Auth";
-
 import {
   ALERT_TYPE,
   Dialog,
@@ -44,7 +42,6 @@ const emailValidator = (email, language) => {
   if (!emailRegex.test(email)) {
     return language === "ar" ? "البريد الإلكتروني غير صالح." : "Invalid email.";
   }
-
   return "";
 };
 
@@ -81,13 +78,13 @@ export default function LoginScreen() {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const [message, setMessage] = useState(""); // New state for message
-
   const language = useSelector((state) => state.Localization.language);
+  
+  // const isAuthenticated = useSelector(
+  //   (state) => state.AuthSlice.isAuthenticated
+  // );
 
-  const isAuthenticated = useSelector(
-    (state) => state.AuthSlice.isAuthenticated
-  );
-
+  
   const onLoginPressed = async () => {
     try {
       const emailError = emailValidator(email.value, language);

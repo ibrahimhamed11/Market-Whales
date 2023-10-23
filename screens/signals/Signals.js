@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, StyleSheet, Text, Dimensions } from "react-native";
+import { ScrollView, View, StyleSheet, Text, Dimensions,RefreshControl  } from "react-native";
 import { Card, Title, Paragraph, Avatar } from "react-native-paper";
 import { getAllSignals } from "../../utils/api/signals";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,6 +11,26 @@ const cardWidth = window.width - 60;
 
 const Signals = () => {
   const [signals, setSignals] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+
+
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    const authToken = await AsyncStorage.getItem("token");
+
+    try {
+      const data = await getAllSignals(authToken);
+      setSignals(data.signals);
+    } catch (error) {
+      console.error("Error fetching signals:", error);
+    }
+
+    setRefreshing(false);
+  };
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,8 +48,11 @@ const Signals = () => {
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
-      {signals.map((signal) => (
+    <ScrollView
+    style={styles.container}
+    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+      
+            {signals.map((signal) => (
         <Card key={signal._id} style={[styles.card, { width: cardWidth }]}>
           <Card.Content>
             <View style={styles.cardHeader}>

@@ -9,7 +9,7 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 const cardWidth = screenWidth * 0.45;
-const cardHeight = screenHeight * 0.56; 
+const cardHeight = screenHeight * 0.45; 
 const maxCardHeight = 1.4*cardHeight 
 
 console.log(cardWidth)
@@ -53,46 +53,53 @@ const CourseItem = ({ course, userCourses, onPress }) => {
             )}
           </View>
         </Card.Content>
-
         <View style={styles.btnContainer}>
-          {isCourseOwned ? (
-            <>
-              <View style={styles.purchased}>
-                <Text style={styles.purchasedtext}>You have purchased</Text>
-              </View>
+  {isCourseOwned || course.price === 0 ? (
+    <>
+      <View style={styles.purchased}>
+        {course.price !== 0 && (
+          <Text style={styles.purchasedtext}>You have purchased</Text>
+        )}
+      </View>
 
-              <Button
-                icon={() => <Icon name="star" size={cardWidth*0.12} color="#fff" />}
-                mode="contained"
-                onPress={onPressButton}
-                style={styles.openbutton}
-              >
-                <Text style={styles.btntext}>Open</Text>
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                icon={() => (
-                  <Icon name="shopping-cart" size={cardWidth*0.12} color="#fff" />
-                )}
-                mode="contained"
-                onPress={onPressButton}
-                style={styles.cartButton}
-              >
-                <Text style={styles.btntext}>Add to cart</Text>
-              </Button>
-              <Button
-                icon={() => <Icon name="credit-card" size={cardWidth*0.12} color="#fff" />}
-                mode="contained"
-                onPress={onPressButton}
-                style={styles.buyNowButton}
-              >
-                <Text style={styles.btntext}>Buy now</Text>
-              </Button>
-            </>
-          )}
-        </View>
+      <Button
+        icon={() => <Icon name="star" size={cardWidth * 0.12} color="#fff" />}
+        mode="contained"
+        onPress={onPressButton}
+        style={styles.openbutton}
+      >
+        <Text style={styles.btntext}>Open</Text>
+      </Button>
+    </>
+  ) : (
+    <>
+      {/* <Button
+        icon={() => (
+          <Icon name="shopping-cart" size={cardWidth * 0.12} color="#fff" />
+        )}
+        mode="contained"
+        onPress={onPressButton}
+        style={styles.cartButton}
+      >
+        <Text style={styles.btntext}>Add to cart</Text>
+      </Button> */}
+      <Button
+        icon={() => (
+          <Icon name="credit-card" size={cardWidth * 0.12} color="#fff" />
+        )}
+        mode="contained"
+        onPress={onPressButton}
+        style={styles.buyNowButton}
+      >
+        <Text style={styles.btntext}>Buy now</Text>
+      </Button>
+    </>
+  )}
+</View>
+
+
+
+
       </Card>
     </View>
   );
@@ -168,8 +175,8 @@ const styles = StyleSheet.create({
   pricetext: {
     marginLeft: 10,
     color: "green",
-    fontSize: cardWidth*0.09,
-    fontWeight: "700",
+    fontSize: cardWidth*0.1,
+    fontWeight: "600",
   },
   purchased: {
     marginBottom: 20,

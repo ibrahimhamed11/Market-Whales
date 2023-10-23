@@ -18,6 +18,7 @@ import DevelopmentScreen from '../screens/devlopment';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Home from "../screens/Home";
 import Signals from "../screens/signals/Signals";
+import CoursesListScreen from "../screens/courses/CoursesListScreen ";
 const CustomTabBarIcon = ({
   iconName,
   iconSize,
@@ -120,12 +121,12 @@ const TabBar = () => {
             } else if (route.name === "المجتمع" || route.name === "Community") {
               iconName = "newspaper-o";
               label = language === "ar" ? "المجتمع" : "Community";
-            } else if (route.name === "المتجر" || route.name === "Market") {
-              iconName = "shopping-cart";
-              label = language === "ar" ? "المتجر" : "Market";
-            } else if (route.name === "السله" || route.name === "Cart") {
-              iconName = "shopping-basket";
-              label = language === "ar" ? "السلة" : "Cart";
+            } else if (route.name === "الكورسات" || route.name === "Courses") {
+              iconName = "graduation-cap";
+              label = language === "ar" ? "الكورسات" : "Courses";
+            } else if (route.name === "الشركات" || route.name === "Companies") {
+              iconName = "building";
+              label = language === "ar" ? "الشركات" : "Companies";
             } else if (route.name === "التوصيات" || route.name === "Signals") {
               iconName = "area-chart";
               label = language === "ar" ? "التوصيات" : "Signals";
@@ -151,10 +152,10 @@ const TabBar = () => {
             // borderTopWidth: 1.2,
             height: 80,
             position: "absolute",
-            bottom: 8,
-            left: 10,
-            right: 10,
-            borderRadius: 15,
+            bottom: 10,
+            left: 3,
+            right: 3,
+            borderRadius: 0,
             paddingBottom: 5,
             shadowColor: "#CABFEC",
             shadowOffset: {
@@ -190,13 +191,13 @@ const TabBar = () => {
 />
 
 <Tab.Screen
-  name={language === 'ar' ? 'المتجر' : 'Market'}
-  component={DevelopmentScreen}
+  name={language === 'ar' ? 'الكورسات' : 'Courses'}
+  component={CoursesListScreen}
   options={{ headerShown: false }}
 />
 <Tab.Screen
-  name={language === 'ar' ? 'السله' : 'Cart'}
-  component={Sellerprofile}
+  name={language === 'ar' ? 'الشركات' : 'Companies'}
+  component={DevelopmentScreen}
   options={{
     tabBarBadge: data.cart.length > 0 ? data.cart.length : null,
     headerShown: false,

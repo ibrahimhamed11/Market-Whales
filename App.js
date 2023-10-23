@@ -285,53 +285,156 @@ export default function App() {
             <Stack.Screen
               name="setings"
               component={Setings}
-              options={{ headerTitle: "", headerShown: true }}
+              options={{
+                headerTitle: "",
+                headerShown: true,
+                headerStyle: {
+                  backgroundColor: COLORS.darkerPurple,
+                },
+                headerBackTitleVisible: false, 
+                headerTintColor: '#fff', 
+                headerBackTitleStyle: {
+                  color: '#fff', 
+                },
+              }}
             />
             <Stack.Screen
               name="VideoListScreen"
               component={VideoListScreen}
-              options={{ headerTitle: "", headerShown: true }}
+              options={{
+                headerTitle: "",
+                headerShown: true,
+                headerStyle: {
+                  backgroundColor: COLORS.darkerPurple,
+                },
+                headerBackTitleVisible: false, 
+                headerTintColor: '#fff', 
+                headerBackTitleStyle: {
+                  color: '#fff', 
+                },
+              }}
             />
 
           <Stack.Screen
               name="DevelopmentScreen"
               component={DevelopmentScreen}
-              options={{ headerShown: false }}
+              options={{
+                headerTitle: "",
+                headerShown: true,
+                headerStyle: {
+                  backgroundColor: COLORS.darkerPurple,
+                },
+                headerBackTitleVisible: false, 
+                headerTintColor: '#fff', 
+                headerBackTitleStyle: {
+                  color: '#fff', 
+                },
+              }}
             />
 
           <Stack.Screen
               name="videodetails"
               component={VideoDetailScreen}
-              options={{ headerTitle: "", headerShown: true }}
+              options={{
+                headerTitle: "",
+                headerShown: true,
+                headerStyle: {
+                  backgroundColor: COLORS.darkerPurple,
+                },
+                headerBackTitleVisible: false, 
+                headerTintColor: '#fff', 
+                headerBackTitleStyle: {
+                  color: '#fff', 
+                },
+              }}
             />
 
             <Stack.Screen
               name="CourseItem"
               component={CourseItem}
-              options={{ headerTitle: "", headerShown: true }}
+              options={{
+                headerTitle: "",
+                headerShown: true,
+                headerStyle: {
+                  backgroundColor: COLORS.darkerPurple,
+                },
+                headerBackTitleVisible: false, 
+                headerTintColor: '#fff', 
+                headerBackTitleStyle: {
+                  color: '#fff', 
+                },
+              }}
+
             />
-                <Stack.Screen
-              name="CoursesListScreen"
-              component={CoursesListScreen}
-              options={{ headerTitle: "", headerShown: true }}
-            />
+
+
+            <Stack.Screen
+  name="CoursesListScreen"
+  component={CoursesListScreen}
+  options={{
+    headerTitle: "",
+    headerShown: true,
+    headerStyle: {
+      backgroundColor: COLORS.darkerPurple,
+    },
+    headerBackTitleVisible: false, 
+    headerTintColor: '#fff', 
+    headerBackTitleStyle: {
+      color: '#fff', 
+    },
+  }}
+/>
+
 
              <Stack.Screen
               name="prices"
               component={prices}
-              options={{ headerTitle: "", headerShown: true }}
+              options={{
+                headerTitle: "",
+                headerShown: true,
+                headerStyle: {
+                  backgroundColor: COLORS.darkerPurple,
+                },
+                headerBackTitleVisible: false, 
+                headerTintColor: '#fff', 
+                headerBackTitleStyle: {
+                  color: '#fff', 
+                },
+              }}
             />
                 <Stack.Screen
               name="signals"
               component={Signals}
-              options={{ headerTitle: "", headerShown: true }}
+              options={{
+                headerTitle: "",
+                headerShown: true,
+                headerStyle: {
+                  backgroundColor: COLORS.darkerPurple,
+                },
+                headerBackTitleVisible: false, 
+                headerTintColor: '#fff', 
+                headerBackTitleStyle: {
+                  color: '#fff', 
+                },
+              }}
             />
             
 
             <Stack.Screen
               name="Notfications"
               component={Notfications}
-              options={{ headerTitle: "", headerShown: true }}
+              options={{
+                headerTitle: "",
+                headerShown: true,
+                headerStyle: {
+                  backgroundColor: COLORS.darkerPurple,
+                },
+                headerBackTitleVisible: false, 
+                headerTintColor: '#fff', 
+                headerBackTitleStyle: {
+                  color: '#fff', 
+                },
+              }}
             />
 
 
