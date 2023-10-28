@@ -119,7 +119,12 @@ const CourseItem = ({ course, userCourses, onPress }) => {
   icon={() => <Icon name="credit-card" size={cardWidth * 0.12} color="#fff" />}
   mode="contained"
   onPress={() => {
-    navigation.navigate('paymentform'); // Replace 'PaymentFormScreen' with your actual screen name
+    navigation.navigate('paymentform', {
+      courseId: course._id,
+      courseName: course.name,
+      coursePrice: course.price,
+    });
+  
   }}
   style={styles.buyNowButton}
 >

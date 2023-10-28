@@ -12,7 +12,9 @@ import {getUserById} from '../../utils/api/user'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../../componants/Header";
 
-const PaymentFormScreen = () => {
+const PaymentFormScreen = ({ route }) => {
+  const { courseId, courseName, coursePrice } = route.params;
+
   const [items, setItems] = useState([
     {
       label: 'USDT - TRC20',
@@ -39,6 +41,7 @@ const PaymentFormScreen = () => {
   const [open, setOpen] = useState(false);
   const [selectedItemData, setSelectedItemData] = useState(null);
   const [userData, setuserData] = useState(null);
+  const [selectedPaymentError, setSelectedPaymentError] = useState('');
 
 
 
@@ -108,12 +111,13 @@ const PaymentFormScreen = () => {
 
 
     <View style={styles.circleContainer}>
-            <Image source={require('../../assets/payment.gif')} style={styles.circleImage} />
+            <Image source={require('../../assets/wallet.png')} style={styles.circleImage} />
           </View>
 
     <View style={styles.container}>
 
 
+    <Text style={styles.errorText}>{selectedPaymentError}</Text>
 
 
 
@@ -123,22 +127,33 @@ const PaymentFormScreen = () => {
           Name: '',
           phoneNumber: '',
         }}
-        validationSchema={Yup.object({
-          Name: Yup.string().required('Please Enter your name'),
-          phoneNumber: Yup.string().required('Please enter your phone'),
-          screenshotUri: Yup.string().nullable(),
-        })}
-        onSubmit={(values, { resetForm }) => {
+   
 
+
+
+        onSubmit={( { resetForm }) => {
+
+       
+          if (!selectedItemData) {
+            setSelectedPaymentError('Please select a payment method'); // Set error message
+            return;
+          }
+
+     
+ 
 
             console.log('Form Submitted:', {
-                ...values,
                 selectedItemData,
                 userId: userData._id,
-                userName: userData.name,
+                userName: userData.name, 
                 userEmail: userData.email,
                 userPhone: userData.phone,
-                userRole:userData.role
+                userRole:userData.role,
+
+                courseId:courseId,
+                coursePrice:coursePrice,
+                courseName:courseName
+
               });
                         resetForm();
         }}
@@ -153,6 +168,9 @@ const PaymentFormScreen = () => {
   setValue={(value) => {
     setValue(value);
     setSelectedItemData(value);
+    setSelectedPaymentError('');
+    
+
   }}
   open={open}
   containerStyle={styles.pickerContainer}
@@ -160,11 +178,7 @@ const PaymentFormScreen = () => {
   itemStyle={styles.pickerItem}
   dropDownStyle={styles.pickerDropDown}
   placeholder="Select Payment Method"
-  onChangeItem={(item) => {
-    console.log('ddddddddddd');
-    setSelectedPayment(item.value);
-    setSelectedItemData(item.value);
-  }}
+
 />
 
 
@@ -183,6 +197,7 @@ const PaymentFormScreen = () => {
       </TouchableOpacity>
     </Card.Actions>
   </Card>
+  
 )}
 
 
@@ -251,13 +266,14 @@ const styles = StyleSheet.create({
         backgroundColor:'#fcfcfd'
       },
       circleContainer: {
-        marginTop:'10%',
+        marginTop:'20%',
         alignItems: 'center',
+        marginBottom:'-20%',
       },
       circleImage: {
-        width: 200,
-        height: 200, 
-        borderRadius: 75, 
+        width: 150,
+        height: 150, 
+        // borderRadius: 75, 
       },
       
   container: {
@@ -335,6 +351,13 @@ borderRadius:15,
   dataCard: {
     marginVertical: 10,
     padding: 10,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 20,
+    alignSelf: 'center', // Center the error text
+    fontSize:20
+
   },
 
 });
