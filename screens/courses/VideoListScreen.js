@@ -3,7 +3,7 @@ import { View, FlatList, TouchableOpacity, Dimensions, Text } from 'react-native
 import { Card, Title, Button } from 'react-native-paper'; // Step 1
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useRoute } from '@react-navigation/native'; // Import useRoute hook
-
+import apiKey from '../../utils/youtubeConfig';
 
 const VideoListScreen = ({ navigation }) => {
   const [videos, setVideos] = useState([]);
@@ -21,7 +21,6 @@ const VideoListScreen = ({ navigation }) => {
 
   const fetchVideos = async () => {
     const playlistId = route.params?.playlistId; // Retrieve playlistId from route params
-    const apiKey = 'AIzaSyCYp-oWaQNz8Vu_-eNzl_cj0S4PkejjHj8';
     const response = await fetch(
       `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=50&playlistId=${playlistId}&key=${apiKey}`
     );

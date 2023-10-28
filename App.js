@@ -97,7 +97,7 @@ export default function App() {
               backgroundColor: "#DAD3D3",
               width: "70%",
             },
-            // drawerPosition: isRTL ? "left" : "right", // Set drawer position based on language
+            drawerPosition: isRTL ? "left" : "right", // Set drawer position based on language
 
 
 
@@ -126,9 +126,9 @@ export default function App() {
                     >
                       <FontAwesome
                         name="bell"
-                        size={24}
+                        size={23}
                         color="#fff"
-                        style={{ margin: 10 }}
+                        style={{ margin: 20 }}
                       />
                     </TouchableHighlight>
 
@@ -136,17 +136,17 @@ export default function App() {
                       <View
                         style={{
                           position: "absolute",
-                          top: 5,
-                          left: 5,
+                          top: 10,
+                          left: 15,
                           backgroundColor: "red",
                           borderRadius: 10,
-                          width: 20,
-                          height: 20,
+                          width: 12,
+                          height: 12,
                           justifyContent: "center",
                           alignItems: "center",
                         }}
                       >
-                        <Text style={{ color: "#fff" }}>{notification}</Text>
+                        {/* <Text style={{ color: "#fff" }}>{notification}</Text> */}
                       </View>
                     )}
                   </>
@@ -161,26 +161,26 @@ export default function App() {
                     >
                       <FontAwesome
                         name="bell"
-                        size={24}
+                        size={23}
                         color="#fff"
-                        style={{ margin: 10 }}
+                        style={{ margin: 20 }}
                       />
                     </TouchableHighlight>
                     {notification > 0 && (
                       <View
                         style={{
                           position: "absolute",
-                          top: 5,
-                          right: 5,
+                          top: 10,
+                          right: 15,
                           backgroundColor: "red",
                           borderRadius: 10,
-                          width: 20,
-                          height: 20,
+                          width: 12,
+                          height: 12,
                           justifyContent: "center",
                           alignItems: "center",
                         }}
                       >
-                        <Text style={{ color: "#fff" }}>{notification}</Text>
+                        {/* <Text style={{ color: "#fff" }}>{notification}</Text> */}
                       </View>
                     )}
                   </>

@@ -204,7 +204,6 @@ setprofileImg(userData.data.image)
 <ImageBackground 
   source={require('../assets/user2.png')} 
   style={{ 
-    flex: 1,
     height:150,
     width:'100%',
     overflow: 'hidden'  ,

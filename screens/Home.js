@@ -13,7 +13,7 @@ const { height } = Dimensions.get('window');
 
 console.log(height)
 const cardWidth = (width - 40) / 2;
-const cardHeight = height/4.2;
+const cardHeight = width/1.75;
 
 const titlefontsize=width * 0.03
 
@@ -136,10 +136,11 @@ export default function StartScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
 
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:COLORS.gray,
+    // backgroundColor:COLORS.gray,
     paddingTop: 10,
      paddingBottom:10,
     marginBottom: 0.120 * height,
