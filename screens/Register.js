@@ -104,7 +104,6 @@ export default function Register({ navigation, route }) {
     }
   };
 
-
   const handleImageUpload = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -112,12 +111,12 @@ export default function Register({ navigation, route }) {
       alert("Permission to access camera roll is required!");
       return;
     }
+
     const imageResult = await ImagePicker.launchImageLibraryAsync();
     if (!imageResult.cancelled) {
       setSelectedImage(imageResult.uri);
     }
   };
-
 
   const validateStep1 = () => {
     const nameError = nameValidator(name.value, language);
@@ -172,6 +171,7 @@ export default function Register({ navigation, route }) {
       formData.append("phone", phone.value);
       formData.append("address", address.value);
       formData.append("username", username.value);
+
       if (selectedImage) {
         formData.append("image", {uri: selectedImage,
           type: "image/jpeg",
@@ -206,24 +206,11 @@ export default function Register({ navigation, route }) {
         });
       }, 2500);
     } catch (error) {
-      if (error.response && error.response.status === 409) {
-        // User is already registered
-        const errorMessage = error.response.data.error || "User is already registered";
-        Toast.show({
-          type: ALERT_TYPE.ERROR,
-          title: "Failed",
-          textBody: errorMessage,
-        });
-      } else {
-        // Handle other errors
-        console.error(error);
-      }
+      // Handle error
+      console.error(error);
     }
   };
 
-
-
-  
   const formattedDate = transformDateForBackend(selectedDate);
 
   const renderProgressBar = () => {
@@ -432,7 +419,6 @@ export default function Register({ navigation, route }) {
                   label={labels.tradingExperienceYears}
                   returnKeyType="done"
                   value={tradingExperienceYears.value}
-
                   onChangeText={(text) =>
                     settradingExperienceYears({ value: text, error: "" })
                   }

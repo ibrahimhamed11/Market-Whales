@@ -73,26 +73,31 @@ const CoursesListScreen = () => {
   }
 
   return (
-    <ScrollView
-      contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap' }}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-        />
-      }
-    >
-      {coursesList.length > 0 ? (
-        coursesList.map(item => (
-          <CourseItem key={item._id} course={item} userCourses={userCourses} />
-        ))
-      ) : (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '50%' }}>
-          <Text style={{ color: 'red', fontSize: 30 }}>No courses found</Text>
-        </View>
-      )}
-    </ScrollView>
+    <View style={{ flex: 1,marginBottom:60 }}>
+      <ScrollView
+        contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap' }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
+        {coursesList.length > 0 ? (
+          coursesList.map(item => (
+
+            <CourseItem key={item._id} course={item} userCourses={userCourses} />
+          ))
+        ) : (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '50%' }}>
+            <Text style={{ color: 'red', fontSize: 30 }}>No courses found</Text>
+          </View>
+        )}
+      </ScrollView>
+      <View style={{ height: 20 }} /> 
+    </View>
   );
+  
 };
 
 export default CoursesListScreen;

@@ -13,7 +13,6 @@ import Animated, {
 } from "react-native-reanimated";
 
 import * as Font from "expo-font";
-import Sellerprofile from "../screens/SellerProfile";
 import DevelopmentScreen from '../screens/devlopment';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Home from "../screens/Home";
@@ -126,6 +125,7 @@ const TabBar = () => {
               label = language === "ar" ? "الكورسات" : "Courses";
             } else if (route.name === "الشركات" || route.name === "Companies") {
               iconName = "building";
+
               label = language === "ar" ? "الشركات" : "Companies";
             } else if (route.name === "التوصيات" || route.name === "Signals") {
               iconName = "area-chart";
@@ -156,7 +156,7 @@ const TabBar = () => {
             left: 3,
             right: 3,
             borderRadius: 0,
-            paddingBottom: 5,
+            // paddingBottom: 5,
             shadowColor: "#CABFEC",
             shadowOffset: {
               width: 3,
@@ -192,7 +192,8 @@ const TabBar = () => {
 
 <Tab.Screen
   name={language === 'ar' ? 'الكورسات' : 'Courses'}
-  component={CoursesListScreen}
+  component={role === 'user' ? CoursesListScreen : CoursesListScreen}
+
   options={{ headerShown: false }}
 />
 <Tab.Screen

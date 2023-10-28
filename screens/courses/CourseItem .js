@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
-import { Card, Button } from "react-native-paper";
+import { Card, Button,Divider } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from '@react-navigation/native';
 import ip from "../../ipConfig";
@@ -10,7 +10,7 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 const cardWidth = screenWidth * 0.45;
-const cardHeight = screenHeight * 0.60; 
+const cardHeight = screenHeight * 0.68; 
 const maxCardHeight = 1.4*cardHeight 
 
 const enTranslations = {
@@ -25,7 +25,7 @@ const arTranslations = {
   free: "مجاناً",
   youHavePurchased: "لقد قمت بالشراء",
   open: "فتح",
-  buyNow: "اشترِ الآن",
+  buyNow: "شراء",
 };
 
 const CourseItem = ({ course, userCourses, onPress }) => {
@@ -44,21 +44,31 @@ const CourseItem = ({ course, userCourses, onPress }) => {
   };
 
   return (
+
+    
     <View style={styles.container}>
       <Card elevation={3} style={[styles.card, { width: cardWidth, height: cardHeight, maxHeight: maxCardHeight }]}>
         <Card.Cover source={{ uri: `${ip}/uploads/${course.image}` }} style={styles.cover} />
 
         <Card.Content>
           <Text style={styles.title}>{course.name}</Text>
+<Divider style={{ height:1 }} />
 
           <View style={styles.descriptionContainer}>
-  <Text style={styles.description}>{course.description}</Text>
+          <Text style={styles.description}>
+  {course.description.length > 100
+    ? course.description.slice(0, 90) + '' // Display first 100 characters followed by ellipsis
+    : course.description}
+</Text>
 </View>
 
 
 
+<Divider style={{ height:1 }} />
+
+{isCourseOwned ? null : (
+
           <View style={styles.infoContainer}>
-            {isCourseOwned ? null : (
               <View style={styles.infoRow}>
                 {course.price === 0 ? (
                   <Text style={[styles.pricetext, styles.freeText]}>{t('free')}</Text>
@@ -69,10 +79,19 @@ const CourseItem = ({ course, userCourses, onPress }) => {
                   </>
                 )}
               </View>
-            )}
           </View>
 
-          
+)}
+
+
+
+
+        </Card.Content>
+
+
+
+
+
         <View style={styles.btnContainer}>
           {isCourseOwned || course.price === 0 ? (
             <>
@@ -81,6 +100,8 @@ const CourseItem = ({ course, userCourses, onPress }) => {
                   <Text style={styles.purchasedtext}>{t('youHavePurchased')}</Text>
                 )}
               </View>
+
+              
               <Button
                 icon={() => <Icon name="star" size={cardWidth * 0.12} color="#fff" />}
                 mode="contained"
@@ -94,22 +115,22 @@ const CourseItem = ({ course, userCourses, onPress }) => {
             <>
 
 
-              <Button
-                icon={() => <Icon name="credit-card" size={cardWidth * 0.12} color="#fff" />}
-                mode="contained"
-                onPress={onPressButton}
-                style={styles.buyNowButton}
-              >
-                <Text style={styles.btntext}>{t('buyNow')}</Text>
-              </Button>
+<Button
+  icon={() => <Icon name="credit-card" size={cardWidth * 0.12} color="#fff" />}
+  mode="contained"
+  onPress={() => {
+    navigation.navigate('paymentform'); // Replace 'PaymentFormScreen' with your actual screen name
+  }}
+  style={styles.buyNowButton}
+>
+  <Text style={styles.btntext}>{t('buyNow')}</Text>
+</Button>
+
 
               
             </>
           )}
         </View>
-        </Card.Content>
-
-        
       </Card>
     </View>
   );
@@ -120,25 +141,36 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   title: {
-    fontFamily:'Droid',
-    marginTop:5,
-    fontSize: cardWidth*0.09,
-    marginBottom: 5,
+        fontFamily: 'Droid',
+
+    marginTop: 10,
+    fontSize: 12,
+    minHeight: '13%', // Set the minimum height
+    numberOfLines: 3, // Set the maximum number of lines
+    overflow: 'hidden', // Enable vertical overflow
+    alignSelf:'center'
   },
+  
+  
   descriptionContainer: {
-    minHeight: 90, // Fixed minimum height
-    maxHeight: 120, // Adjust this value as needed for the maximum height
+    marginTop:5,
+    minHeight: 120, // Fixed minimum height
+    maxHeight:120,
     overflow: 'hidden', // Hide any content that overflows the container
+    alignSelf:'center',
+    numberOfLines: 3, // Set the maximum number of lines
+   
+
   },
   
   
   description: {
     fontFamily: 'Droid',
-    fontSize: cardWidth * 0.070,
+    fontSize: 10
   },
   
   infoContainer: {
-    minHeight: 30, // Fixed minimum height
+    minHeight: 50,
 
     marginTop: 10,
   },
@@ -166,24 +198,27 @@ const styles = StyleSheet.create({
   btnContainer: {
     alignItems: "center",
     marginTop: 20,
+    height:60,
 
-    bottom: 0,
+    bottom: 10,
 
   },
+
   openbutton: {
-    width: "80%",
+    width: "90%",
+    
     backgroundColor: "#0A7E06",
     borderRadius: 10,
     marginBottom: 5,
   },
   cartButton: {
-    width: "80%",
+    width: "90%",
     backgroundColor: "#0B6E6E",
     borderRadius: 10,
     marginBottom: 5,
   },
   buyNowButton: {
-    width: "80%",
+    width: "90%",
     backgroundColor: "#DA901B", // Adjust color as needed
     borderRadius: 10,
     marginBottom: 5,
@@ -193,25 +228,39 @@ const styles = StyleSheet.create({
 
     fontSize: cardWidth*0.058,
   },
+
+
+
+
+
+
+
   freeText: {
     color: "red",
-    fontSize:cardWidth*0.1,
-    marginLeft: 10,
+    fontSize:20,
+    marginLeft: 15,
     fontWeight: "600",
   },
+
+
   pricetext: {
-    marginLeft: 10,
+    marginLeft: 25,
     color: "green",
-    fontSize: cardWidth*0.1,
-    fontWeight: "600",
+    fontSize: 15,
+    fontWeight: "800",
   },
+
+
+
   purchased: {
-    marginBottom: 20,
   },
   purchasedtext: {
-    fontSize: cardWidth*0.070,
+    marginTop: 10,
+
+    fontSize: 15,
     color: "green",
-    fontWeight: "700",
+    fontWeight: "800",
+    marginBottom: 26,
   },
 });
 
