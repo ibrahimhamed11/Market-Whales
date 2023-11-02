@@ -11,7 +11,7 @@ import COLORS from '../../colors/colors';
 import {getUserById} from '../../utils/api/user'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../../componants/Header";
-
+import {createOrder} from '../../utils/api/orders'
 const PaymentFormScreen = ({ route }) => {
   const { courseId, courseName, coursePrice } = route.params;
 
@@ -41,6 +41,8 @@ const PaymentFormScreen = ({ route }) => {
   const [open, setOpen] = useState(false);
   const [selectedItemData, setSelectedItemData] = useState(null);
   const [userData, setuserData] = useState(null);
+  const [usertoken, setToken] = useState(null);
+
   const [selectedPaymentError, setSelectedPaymentError] = useState('');
 
 
@@ -60,18 +62,18 @@ const PaymentFormScreen = ({ route }) => {
     }
   };
 
-
   const retrieveUserData = async () => {
     try {
       const userId = await AsyncStorage.getItem("userId");
       const token = await AsyncStorage.getItem("token");
-  
+      setToken(token)
       return { userId, token };
     } catch (error) {
       console.log("Error retrieving data:", error);
       throw error;
     }
   };
+  
   
   const getUserData = async () => {
     try {
@@ -93,6 +95,7 @@ const PaymentFormScreen = ({ route }) => {
         const user = await getUserData(); // Fetch user data
         setuserData(user.data); // Set user data in state
       } catch (error) {
+        
         console.error("Error fetching user data:", error);
       }
     };
@@ -131,32 +134,46 @@ const PaymentFormScreen = ({ route }) => {
 
 
 
-        onSubmit={( { resetForm }) => {
 
-       
+        onSubmit={({ resetForm }) => {
           if (!selectedItemData) {
             setSelectedPaymentError('Please select a payment method'); // Set error message
             return;
           }
+        
 
-     
- 
+          const orderData = {
+            selectedItemData,
+            userId: userData._id,
+            userName: userData.name, 
+            userEmail: userData.email,
+            userPhone: userData.phone,
+            userRole: userData.role,
+            courseId,
+            coursePrice,
+            courseName,
+            screenshot:"test"
 
-            console.log('Form Submitted:', {
-                selectedItemData,
-                userId: userData._id,
-                userName: userData.name, 
-                userEmail: userData.email,
-                userPhone: userData.phone,
-                userRole:userData.role,
+          };
+        
 
-                courseId:courseId,
-                coursePrice:coursePrice,
-                courseName:courseName
-
-              });
-                        resetForm();
+          createOrder(orderData, usertoken)
+            .then(response => {
+              console.log('Order created successfully:', response);
+              resetForm(); 
+            })
+            .catch(error => {
+              console.error('Error creating order:', error);
+            });
         }}
+        
+
+
+
+
+
+
+
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
           <>
