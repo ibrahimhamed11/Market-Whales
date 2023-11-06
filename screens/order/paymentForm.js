@@ -12,6 +12,13 @@ import {getUserById} from '../../utils/api/user'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../../componants/Header";
 import {createOrder} from '../../utils/api/orders'
+import {
+  ALERT_TYPE,
+  Dialog,
+  AlertNotificationRoot,
+  Toast,
+} from "react-native-alert-notification";
+
 const PaymentFormScreen = ({ route }) => {
   const { courseId, courseName, coursePrice } = route.params;
 
@@ -42,25 +49,24 @@ const PaymentFormScreen = ({ route }) => {
   const [selectedItemData, setSelectedItemData] = useState(null);
   const [userData, setuserData] = useState(null);
   const [usertoken, setToken] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const [selectedPaymentError, setSelectedPaymentError] = useState('');
 
 
 
-
-
   const handleImageUpload = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
     if (permissionResult.granted === false) {
-      alert('Permission to access camera roll is required!');
-      return;
+        alert('Permission to access the camera roll is required!');
+        return;
     }
+
     const imageResult = await ImagePicker.launchImageLibraryAsync();
     if (!imageResult.cancelled) {
-      setScreenshotUri(imageResult.uri);
+        setSelectedImage(imageResult.uri);
     }
-  };
+};
 
   const retrieveUserData = async () => {
     try {
@@ -108,6 +114,8 @@ const PaymentFormScreen = ({ route }) => {
 
 
   return (
+    <AlertNotificationRoot theme="dark">
+
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -133,15 +141,12 @@ const PaymentFormScreen = ({ route }) => {
    
 
 
-
-
         onSubmit={({ resetForm }) => {
           if (!selectedItemData) {
             setSelectedPaymentError('Please select a payment method'); // Set error message
             return;
           }
         
-
           const orderData = {
             selectedItemData,
             userId: userData._id,
@@ -149,31 +154,41 @@ const PaymentFormScreen = ({ route }) => {
             userEmail: userData.email,
             userPhone: userData.phone,
             userRole: userData.role,
-            courseId,
-            coursePrice,
-            courseName,
-            screenshot:"test"
-
+            courseId: courseId,
+            coursePrice: coursePrice,
+            courseName: courseName,
+            image: {
+              uri: selectedImage,
+              name: 'screenshot.jpg',
+              type: 'image/jpeg',
+            }
           };
         
-
-          createOrder(orderData, usertoken)
+          createOrder(orderData)
             .then(response => {
-              console.log('Order created successfully:', response);
-              resetForm(); 
+         
+
+
+              
+                Toast.show({
+                  type: ALERT_TYPE.SUCCESS,
+                  title: "Success",
+                  textBody: "تم ارسال طلبك بنجاح سيتم التواصل معاك من خلال فريقنا"
+                });
+                resetForm(); // Reset the form after successful submission
+        
             })
             .catch(error => {
               console.error('Error creating order:', error);
             });
+        
+          resetForm(); // Moved this line inside the promise block
         }}
         
 
 
 
-
-
-
-
+        
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
           <>
@@ -272,6 +287,8 @@ const PaymentFormScreen = ({ route }) => {
     </View>
     </ScrollView>
     </TouchableWithoutFeedback>
+    </AlertNotificationRoot>
+
 
 
   );
