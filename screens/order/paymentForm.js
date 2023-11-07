@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from 'react';
-import { View, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Keyboard, StyleSheet, Image } from 'react-native';
+import { View, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Keyboard, StyleSheet, Image,Paragraph } from 'react-native';
 import { TextInput, Button, Text, Card } from 'react-native-paper';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -24,7 +24,7 @@ import { ActivityIndicator, Colors } from 'react-native-paper';
 const PaymentFormScreen = ({ route }) => {
   const navigation = useNavigation();
 
-  const { courseId, courseName, coursePrice } = route.params;
+  const { courseId, courseName, coursePrice,description } = route.params;
 
   const [items, setItems] = useState([
     {
@@ -138,17 +138,33 @@ const PaymentFormScreen = ({ route }) => {
     <ScrollView contentContainerStyle={styles.scrollContainer}>
 
 
-    <View style={styles.circleContainer}>
-            <Image source={require('../../assets/wallet.png')} style={styles.circleImage} />
-          </View>
 
     <View style={styles.container}>
+
+{/* Course Details Section */}
+<Card style={styles.courseCard}>
+  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <View style={styles.circleContainer}>
+      <Image source={require('../../assets/wallet.png')} style={styles.circleImage} />
+    </View>
+    <Card.Title
+      title={courseName}
+      subtitle={`Price: ${coursePrice}`}
+      titleStyle={styles.courseTitle}
+      subtitleStyle={styles.courseSubtitle}
+    />
+  </View>
+  <Card.Content>
+    <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>Description:</Text>
+    <Text style={{ marginBottom: 10 }}>{description}</Text>
+  </Card.Content>
+</Card>
 
 
     <Text style={styles.errorText}>{selectedPaymentError}</Text>
 
 
-
+  
 
       <Formik
         initialValues={{
@@ -265,6 +281,10 @@ const PaymentFormScreen = ({ route }) => {
 
 
 
+
+
+
+
             {/* <TextInput
               label="Name"
               value={values.Name}
@@ -338,13 +358,13 @@ const styles = StyleSheet.create({
         backgroundColor:'#fcfcfd'
       },
       circleContainer: {
-        marginTop:'20%',
-        alignItems: 'center',
-        marginBottom:'-20%',
+        // marginTop:'5%',
+        // alignItems: 'center',
+        // marginBottom:'-25%',
       },
       circleImage: {
-        width: 150,
-        height: 150, 
+        width: 100,
+        height: 100, 
         // borderRadius: 75, 
       },
       
@@ -431,6 +451,38 @@ borderRadius:15,
     fontSize:20
 
   },
+
+
+
+
+
+
+
+
+  courseCard: {
+    marginVertical: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
+    backgroundColor: '#fff',
+  },
+  courseTitle: {
+    fontSize: 20,
+    marginBottom: 5,
+    color: COLORS.primary, // Add your primary color here
+  },
+  courseSubtitle: {
+    fontSize: 16,
+    color: COLORS.accent, // Add your accent color here
+  },
+  courseDescription: {
+    fontSize: 16,
+    color: '#333',
+  },
+
+  
+
 
 });
 

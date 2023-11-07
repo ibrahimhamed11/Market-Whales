@@ -123,6 +123,8 @@ const CourseItem = ({ course, userCourses, onPress }) => {
       courseId: course._id,
       courseName: course.name,
       coursePrice: course.price,
+      description:course.description
+    
     });
   
   }}
