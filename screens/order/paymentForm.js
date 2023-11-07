@@ -18,8 +18,12 @@ import {
   AlertNotificationRoot,
   Toast,
 } from "react-native-alert-notification";
+import { useNavigation } from '@react-navigation/native';
+import { ActivityIndicator, Colors } from 'react-native-paper';
 
 const PaymentFormScreen = ({ route }) => {
+  const navigation = useNavigation();
+
   const { courseId, courseName, coursePrice } = route.params;
 
   const [items, setItems] = useState([
@@ -50,6 +54,7 @@ const PaymentFormScreen = ({ route }) => {
   const [userData, setuserData] = useState(null);
   const [usertoken, setToken] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const [selectedPaymentError, setSelectedPaymentError] = useState('');
 
@@ -110,8 +115,20 @@ const PaymentFormScreen = ({ route }) => {
   }, []); 
 
 
-    
+  const PaymentFormSchema = Yup.object().shape({
+    screenshotUri: Yup.string().required('Screenshot is required'),
+  });
+     
 
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <ActivityIndicator size="large" color={COLORS.accent} style={{ transform: [{ scale: 2 }] }} />
+    </View>
+    
+    
+    );
+  }
 
   return (
     <AlertNotificationRoot theme="dark">
@@ -138,10 +155,10 @@ const PaymentFormScreen = ({ route }) => {
           Name: '',
           phoneNumber: '',
         }}
-   
+        // validationSchema={PaymentFormSchema} // Add this line
 
 
-        onSubmit={({ resetForm }) => {
+        onSubmit={async ({ resetForm }) => {
           if (!selectedItemData) {
             setSelectedPaymentError('Please select a payment method'); // Set error message
             return;
@@ -164,28 +181,41 @@ const PaymentFormScreen = ({ route }) => {
             }
           };
         
-          createOrder(orderData)
-            .then(response => {
-         
-
-
-              
-                Toast.show({
-                  type: ALERT_TYPE.SUCCESS,
-                  title: "Success",
-                  textBody: "تم ارسال طلبك بنجاح سيتم التواصل معاك من خلال فريقنا"
-                });
-                resetForm(); // Reset the form after successful submission
+          try {
+            // Show loading indicator
+            setLoading(true);
         
-            })
-            .catch(error => {
-              console.error('Error creating order:', error);
+            // Send request to create order
+            const response = await createOrder(orderData);
+        
+            // Simulate waiting for 2 seconds
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        
+            // Hide loading indicator
+            setLoading(false);
+        
+            // Show success Toast
+            Toast.show({
+              type: ALERT_TYPE.SUCCESS,
+              title: "Success",
+              textBody: "تم ارسال طلبك بنجاح سيتم التواصل معاك من خلال فريقنا"
             });
         
-          resetForm(); // Moved this line inside the promise block
+            // Navigate to CoursesListScreen
+
+            setTimeout(() => {
+              navigation.navigate('CoursesListScreen');
+            }, 2000);        
+            // Reset the form after successful submission
+            resetForm();
+          } catch (error) {
+            // Hide loading indicator in case of error
+            setLoading(false);
+        
+            console.error('Error creating order:', error);
+          }
         }}
         
-
 
 
         
@@ -262,23 +292,31 @@ const PaymentFormScreen = ({ route }) => {
  */}
 
 
+{touched.screenshotUri && errors.screenshotUri && (
+  <Text style={styles.errorText}>{errors.screenshotUri}</Text>
+)}
 
 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
   <TouchableOpacity style={styles.uploadButton} onPress={handleImageUpload}>
     <Text style={styles.uploadButtonText}>Upload Screenshot</Text>
   </TouchableOpacity>
 
-  <Button mode="contained" onPress={handleSubmit} style={styles.button}>
+  <Button
+    mode="contained"
+    onPress={handleSubmit}
+    style={styles.button}
+    disabled={!selectedImage} // Disable the button if no screenshot is uploaded
+  >
     Confirm
   </Button>
 </View>
 
-            {screenshotUri && (
-              <View style={styles.imageContainer}>
-                <Text>Uploaded Screenshot:</Text>
-                <Image source={{ uri: screenshotUri }} style={styles.image} />
-              </View>
-            )}
+{selectedImage && (
+  <View style={styles.imageContainer}>
+    <Text>Uploaded Screenshot:</Text>
+    <Image source={{ uri: selectedImage }} style={styles.image} />
+  </View>
+)}
 
  
           </>

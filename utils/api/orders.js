@@ -16,7 +16,7 @@ export const createOrder = async (orderData) => {
     formData.append('userRole', orderData.userRole);
     formData.append('image', orderData.image); // Assuming 'image' is the key for the file
 
-    const response = await axios.post('http://192.168.1.7:4000/orders/add', formData, {
+    const response = await axios.post('https://market-whales-ynmr.onrender.com/orders/add', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
