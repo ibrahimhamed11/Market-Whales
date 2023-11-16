@@ -32,7 +32,7 @@ import CoursesListScreen from "./screens/courses/CoursesListScreen ";
 import prices from "./screens/marketPrices/prices";
 import Signals from "./screens/signals/Signals";
 import PaymentFormScreen from "./screens/order/paymentForm";
-
+import EconomicCalendar from "./screens/EconomicCalender";
 
 
 
@@ -441,6 +441,24 @@ export default function App() {
 <Stack.Screen
               name="paymentform"
               component={PaymentFormScreen}
+              options={{
+                headerTitle: "",
+                headerShown: true,
+                headerStyle: {
+                  backgroundColor: COLORS.darkerPurple,
+                },
+                headerBackTitleVisible: false, 
+                headerTintColor: '#fff', 
+                headerBackTitleStyle: {
+                  color: '#fff', 
+                },
+              }}
+            />
+            
+
+            <Stack.Screen
+              name="economiccalendar"
+              component={EconomicCalendar}
               options={{
                 headerTitle: "",
                 headerShown: true,

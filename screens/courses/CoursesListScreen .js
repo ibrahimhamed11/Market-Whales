@@ -73,7 +73,7 @@ const CoursesListScreen = () => {
   }
 
   return (
-    <View style={{ flex: 1,marginBottom:60 }}>
+
       <ScrollView
         contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap' }}
         refreshControl={
@@ -94,8 +94,7 @@ const CoursesListScreen = () => {
           </View>
         )}
       </ScrollView>
-      <View style={{ height: 20 }} /> 
-    </View>
+
   );
   
 };

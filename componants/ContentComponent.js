@@ -21,9 +21,7 @@ import { logout } from '../Redux/Slices/authSlice';
 function CustomDrawerContent(props) {
 
   const navigation = useNavigation();
-
   const dispatch = useDispatch();
-
 
 const language = useSelector((state) => state.Localization.language);
 const [username, setUsername] = useState(""); // New state for message
@@ -103,7 +101,7 @@ setprofileImg(userData.data.image)
   };
 
   const handleCalendar = () => {
-    navigation.navigate('courses'); 
+    navigation.navigate('economiccalendar'); 
   };
 
   const handleMarketPrice = () => {
@@ -168,13 +166,13 @@ setprofileImg(userData.data.image)
 
   const menuItems = [
     { names: ['ملفك الشخصي', 'Your Profile'], iconName: 'user', onPress: handleProfileSettings },
+    { names: ['الكورسات', 'Courses'], iconName: 'graduation-cap', onPress: handleCourses },
     { names: ['التوصيات', 'Signals'], iconName: 'line-chart', onPress: handleSignals },
-    { names: ['تواصل معنا', 'Contact Us'], iconName: 'envelope', onPress: handleContactUs },
     { names: ['المقالات', 'Blogs'], iconName: 'newspaper-o', onPress: handleBlogs },
     { names: ['التقويم', 'Calendar'], iconName: 'calendar', onPress: handleCalendar },
     { names: ['اسعار السوق', 'Market Price'], iconName: 'money', onPress: handleMarketPrice },
     { names: ['الشارت', 'Chart'], iconName: 'line-chart', onPress: handleChart },
-    { names: ['الكورسات', 'Courses'], iconName: 'graduation-cap', onPress: handleCourses },
+    { names: ['تواصل معنا', 'Contact Us'], iconName: 'envelope', onPress: handleContactUs },
     { names: ['الإعدادات', 'Settings'], iconName: 'cogs', onPress: handleSettings },
     { names: ['تسجيل الخروج', 'Logout'], iconName: 'sign-out', onPress: handleLogout },
   ];

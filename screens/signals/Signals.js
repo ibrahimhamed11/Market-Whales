@@ -186,7 +186,7 @@ const Signals = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 30,
-    marginBottom: 100,
+    // marginBottom: 100,
   },
   card: {
     marginBottom: 10,

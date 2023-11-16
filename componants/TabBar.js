@@ -11,7 +11,6 @@ import Animated, {
   withSpring,
   withRepeat,
 } from "react-native-reanimated";
-
 import * as Font from "expo-font";
 import DevelopmentScreen from '../screens/devlopment';
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -30,14 +29,11 @@ const CustomTabBarIcon = ({
 
   useEffect(() => {
     if (isFocused) {
-      translateY.value = withSpring(-15, { damping: 15, stiffness: 60 }); // Adjust damping and stiffness as needed
-      rotate.value = withRepeat(
-        withSpring(360, { damping: 15, stiffness: 60 }),
-        -1
-      ); // Adjust damping and stiffness as needed
+      translateY.value = withSpring(-15, { damping: 15, stiffness: 60 });
+      rotate.value = withSpring(360, { damping: 15, stiffness: 60 });
     }
   }, [isFocused]);
-
+  
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
