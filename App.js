@@ -22,7 +22,7 @@ import TabBar from "./componants/TabBar";
 import SellerProfile from "./screens/SellerProfile";
 import Notfications from "./screens/Notfications";
 import PhoneAuth from "./screens/phoneAuth";
-import PaymentScreen from "./screens/PaymentScreen";
+ import PaymentScreen from "./screens/PaymentScreen";
 import TradingViewChart from "./screens/liveChart/TradingView";
 import DevelopmentScreen from "./screens/devlopment";
 import VideoListScreen from "./screens/courses/VideoListScreen";
@@ -33,9 +33,8 @@ import prices from "./screens/marketPrices/prices";
 import Signals from "./screens/signals/Signals";
 import PaymentFormScreen from "./screens/order/paymentForm";
 import EconomicCalendar from "./screens/EconomicCalender";
-
-
-
+import Cashback from "./screens/cashback/Cashback";
+import payments from "./screens/cashback/Payments";
 import { FontAwesome } from "@expo/vector-icons";
 import Setings from "./screens/Setings";
 
@@ -472,6 +471,42 @@ export default function App() {
                 },
               }}
             />
+
+
+<Stack.Screen
+              name="cashback"
+              component={Cashback}
+              options={{
+                headerTitle: "",
+                headerShown: true,
+                headerStyle: {
+                  backgroundColor: COLORS.darkerPurple,
+                },
+                headerBackTitleVisible: false, 
+                headerTintColor: '#fff', 
+                headerBackTitleStyle: {
+                  color: '#fff', 
+                },
+              }}
+            />
+<Stack.Screen
+              name="payments"
+              component={payments}
+              options={{
+                headerTitle: "",
+                headerShown: true,
+                headerStyle: {
+                  backgroundColor: COLORS.darkerPurple,
+                },
+                headerBackTitleVisible: false, 
+                headerTintColor: '#fff', 
+                headerBackTitleStyle: {
+                  color: '#fff', 
+                },
+              }}
+            />
+
+
 
           </Stack.Navigator>
           <StatusBar style="auto" />

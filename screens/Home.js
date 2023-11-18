@@ -83,7 +83,7 @@ export default function StartScreen({ navigation }) {
         ar: 'يمكنك الاستفادة من عائد على حجم التداول لك إذا كنت مسجل تحت وكالتنا' 
       },
       icon: require('../assets/home/cashback.png'), 
-      onPress: () =>  navigation.navigate('DevelopmentScreen')
+      onPress: () =>  navigation.navigate('cashback')
     },
   ];
   

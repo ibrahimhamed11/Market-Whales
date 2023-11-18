@@ -13,7 +13,8 @@ const COLORS = {
     lightMagenta: '#e1bee8',
    darkBlue: '#00418b',
    inactive:'#615D6059',
-   active:'#761700'
+   active:'#761700',
+   darkcard:'#333a49'
   };
   
   export default COLORS;

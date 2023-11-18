@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Text } from "react-native-paper";
 import Background from "../componants/Background";
-import Motherlogo from "../componants/motherLogo";
+import Motherlogo from "../componants/registerLogo";
 import Button from "../componants/Button";
 import TextInput from "../componants/TextInput";
 import BackButton from "../componants/BackButton";
