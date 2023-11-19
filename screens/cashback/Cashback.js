@@ -250,8 +250,8 @@ const Cashback = () => {
                         { transform: [{ scale: animatedScale }] },
                       ]}
                     >
-                      <Title style={[styles.cardTitle, { fontSize: 20 }]}>
-                        {language === "ar" ? "المدفوعات" : "Payments"}
+                      <Title style={[styles.cardTitle, { fontSize: 17 }]}>
+                        {language === "ar" ? "سجل المدفوعات" : "Payments Log"}
                       </Title>
                     </Animated.View>
                   </Card>
@@ -280,7 +280,7 @@ const Cashback = () => {
                         { transform: [{ scale: animatedScale }] },
                       ]}
                     >
-                      <Title style={[styles.cardTitle, { fontSize: 20 }]}>
+                      <Title style={[styles.cardTitle, { fontSize: 17 }]}>
                         {language === "ar" ? "حساباتك" : "Your Accounts"}
                       </Title>
                     </Animated.View>

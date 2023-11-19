@@ -24,15 +24,88 @@ const PaymentsTable = () => {
     },
     {
       _id: '6555f5ec52188bed79f6d5f7',
-      amount: 50,
+      amount: 22,
+      method: 'Credit Card',
+      status: 'Cancelled',
+      date: '2023-12-15T10:58:52.834Z',
+      notes: 'Payment',
+      userId: '65101f844e74113b6f5a70a7',
+      __v: 0,
+    },
+    {
+      _id: '6555f5ec52188bed79f6d5f7',
+      amount: 22,
       method: 'Credit Card',
       status: 'Pending',
+      date: '2024-1-14T10:58:52.834Z',
+      notes: 'Payment',
+      userId: '65101f844e74113b6f5a70a7',
+      __v: 0,
+    },
+    {
+      _id: '6555f5ec52188bed79f6d5f7',
+      amount: 50,
+      method: 'Credit Card',
+      status: 'Approved',
       date: '2023-11-16T10:58:52.834Z',
       notes: 'Payment',
       userId: '65101f844e74113b6f5a70a7',
       __v: 0,
     },
+    {
+      _id: '6555f5ec52188bed79f6d5f7',
+      amount: 22,
+      method: 'Credit Card',
+      status: 'Cancelled',
+      date: '2023-12-15T10:58:52.834Z',
+      notes: 'Payment',
+      userId: '65101f844e74113b6f5a70a7',
+      __v: 0,
+    },
+    {
+      _id: '6555f5ec52188bed79f6d5f7',
+      amount: 22,
+      method: 'Credit Card',
+      status: 'Pending',
+      date: '2024-1-14T10:58:52.834Z',
+      notes: 'Payment',
+      userId: '65101f844e74113b6f5a70a7',
+      __v: 0,
+    },
+        {
+      _id: '6555f5ec52188bed79f6d5f7',
+      amount: 50,
+      method: 'Credit Card',
+      status: 'Approved',
+      date: '2023-11-16T10:58:52.834Z',
+      notes: 'Payment',
+      userId: '65101f844e74113b6f5a70a7',
+      __v: 0,
+    },
+    {
+      _id: '6555f5ec52188bed79f6d5f7',
+      amount: 22,
+      method: 'Credit Card',
+      status: 'Cancelled',
+      date: '2023-12-15T10:58:52.834Z',
+      notes: 'Payment',
+      userId: '65101f844e74113b6f5a70a7',
+      __v: 0,
+    },
+    {
+      _id: '6555f5ec52188bed79f6d5f7',
+      amount: 22,
+      method: 'Credit Card',
+      status: 'Pending',
+      date: '2024-1-14T10:58:52.834Z',
+      notes: 'Payment',
+      userId: '65101f844e74113b6f5a70a7',
+      __v: 0,
+    },
   ];
+
+  // Sort payments by date in descending order
+  const sortedPayments = [...payments].sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -45,13 +118,13 @@ const PaymentsTable = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'Approved':
-        return '#4CAF50'; // Green color for 'Approved'
+        return '#4CAF50'; 
       case 'Pending':
-        return '#FFC107'; // Orange color for 'Pending'
+        return '#FFC107'; 
       case 'Cancelled':
-        return '#F44336'; // Red color for 'Cancelled'
+        return '#F44336'; 
       default:
-        return '#2196F3'; // Blue color for other statuses
+        return '#2196F3';
     }
   };
 
@@ -63,22 +136,26 @@ const PaymentsTable = () => {
           <View style={styles.cardColumn}>
             <Text style={styles.cardText}>Method : {payment.method}</Text>
             <Text style={styles.cardText}>
-  <Text >Amount : </Text>
-  <Text style={{ fontWeight: 'bold' }}>${payment.amount}</Text>
-</Text>
+              <Text >Amount : </Text>
+              <Text style={{ fontWeight: 'bold' }}>${payment.amount}</Text>
+            </Text>
           </View>
           <View style={styles.cardColumn}>
-          <Text style={[
-  styles.cardText,
-  { 
-    fontWeight: 'bold',
-    color: payment.status === 'Approved' ? '#4CAF50' : payment.status === 'Pending' ? '#FFC107' : 'black'
-  }
-]}>
-  {payment.status}
-</Text>
+            <Text style={[
+              styles.cardText,
+              { 
+                fontWeight: 'bold',
+                color: 
+                  payment.status === 'Approved' ? '#4CAF50' :
+                  payment.status === 'Pending' ? '#FFC107' :
+                  payment.status === 'Cancelled' ? '#F44336' : 
+                  'black'
+              }
+            ]}>
+              {payment.status}
+            </Text>
             <Text style={styles.cardText}>
-              {moment(payment.date).format('DD/MM/YYYY - HH:mm')}
+              {moment(payment.date).format('DD/MM/YYYY - hh:mm A')}
             </Text>
             <Text style={styles.cardText}>Notes : {payment.notes}</Text>
           </View>
@@ -89,17 +166,17 @@ const PaymentsTable = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <Searchbar
+      {/* <Searchbar
         placeholder="Search"
         onChangeText={handleSearch}
         value={searchQuery}
         style={styles.searchBar}
-      />
+      /> */}
 
       <ScrollView>
         {searchQuery
           ? filteredPayments.map((payment) => renderRow(payment))
-          : payments.map((payment) => renderRow(payment))}
+          : sortedPayments.map((payment) => renderRow(payment))}
       </ScrollView>
     </View>
   );
