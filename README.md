@@ -9,7 +9,7 @@
 
 # APP UI
 
-(https://github.com/ibrahimhamed11/Market-Whales/blob/new/assets/appui.png)
+![App UI](https://github.com/ibrahimhamed11/Market-Whales/raw/new/assets/appui.png)
 
 This project is a [React Native](https://facebook.github.io/react-native/) boilerplate using [Expo](https://expo.io/) that you can use to save you a couple of days worth of setup, for previous Expo SDK support check out the branches on this repo :).
 
