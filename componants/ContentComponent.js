@@ -156,7 +156,11 @@ setprofileImg(userData.data.image)
             } catch (error) {
               console.log('failed to clear local storage', error);
             }
-            navigation.navigate('Login');
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "Login" }],
+            });
+          
           },
         },
       ],
