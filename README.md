@@ -17,15 +17,16 @@ This boilerplate capitalizes on the use of [Redux](https://react-redux.js.org/),
 
 ## Utilities
 
-* [Expo](https://expo.io/)
-* [React Native](facebook.github.io/react-native/)
-* [Axios](https://github.com/axios/axios/) for your API calls
-* [React Navigation](https://reactnavigation.org/) for managing application navigation
-* [Redux](https://redux.js.org/) for managing your application states
-* [React Persist](https://github.com/rt2zz/redux-persist/) for presisting Redux states
-* [React Promise Middleware](https://github.com/pburtchaell/redux-promise-middleware/) for simple yet robust handling of async action creators in Redux
-* [Redux Thunk](https://github.com/reduxjs/redux-thunk/) a redux middleware for redux side effects logic, including complex synchronous logic that need access to the store
-* [React Native Paper](https://reactnativepaper.com/) for your components and UI styling
+Expo - A framework and platform for universal React applications. ("expo": "~48.0.18")
+React Native - A JavaScript framework for building natively rendered applications. ("react-native": "0.71.8")
+Axios - A promise-based HTTP client for the browser and Node.js, used for API calls. ("axios": "^1.4.0")
+React Navigation - A popular library for managing application navigation in React Native. ("@react-navigation/native": "^6.1.7")
+Redux - A predictable state container for JavaScript apps. ("@reduxjs/toolkit": "^1.9.5", "react-redux": "^8.1.2")
+React Persist - A library for persisting and rehydrating a Redux store. ("expo-localization": "^14.3.0")
+React Promise Middleware - Middleware for handling asynchronous actions in Redux. ("@reduxjs/toolkit": "^1.9.5")
+Redux Thunk - A middleware for Redux that allows you to write action creators that return a function instead of an action. ("@reduxjs/toolkit": "^1.9.5")
+React Native Paper - A set of components for React Native that implement Google's Material Design. ("react-native-paper": "^5.10.0")
+
 
 ## Features Build-In
 
