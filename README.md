@@ -14,92 +14,28 @@
 This project is a [React Native](https://facebook.github.io/react-native/) boilerplate using [Expo](https://expo.io/) that you can use to save you a couple of days worth of setup, for previous Expo SDK support check out the branches on this repo :).
 
 This boilerplate capitalizes on the use of [Redux](https://react-redux.js.org/), [React Navigation](https://reactnavigation.org/) and it follows Expo's initial project structure that is resulted from invoking `expo init` to create your project, providing you with a great and optimized file structure, organized directories, a great way to maintain your actions/reducers, your assets, configs, API end points, built-in theming, and much more.
+Utilities
+Expo: A framework and platform for universal React applications.
+React Native: A JavaScript framework for building natively rendered applications.
+Axios: A promise-based HTTP client for API calls.
+React Navigation: A powerful library for managing application navigation.
+Redux: A predictable state container for managing application states.
+React Persist: A library for persisting and rehydrating Redux states.
+React Promise Middleware: Middleware for robust handling of async action creators in Redux.
+Redux Thunk: Middleware for managing complex synchronous logic in Redux.
+React Native Paper: A component library for React Native with Material Design implementation.
 
-## Utilities
 
-Expo - A framework and platform for universal React applications. ("expo": "~48.0.18")
-React Native - A JavaScript framework for building natively rendered applications. ("react-native": "0.71.8")
-Axios - A promise-based HTTP client for the browser and Node.js, used for API calls. ("axios": "^1.4.0")
-React Navigation - A popular library for managing application navigation in React Native. ("@react-navigation/native": "^6.1.7")
-Redux - A predictable state container for JavaScript apps. ("@reduxjs/toolkit": "^1.9.5", "react-redux": "^8.1.2")
-React Persist - A library for persisting and rehydrating a Redux store. ("expo-localization": "^14.3.0")
-React Promise Middleware - Middleware for handling asynchronous actions in Redux. ("@reduxjs/toolkit": "^1.9.5")
-Redux Thunk - A middleware for Redux that allows you to write action creators that return a function instead of an action. ("@reduxjs/toolkit": "^1.9.5")
-React Native Paper - A set of components for React Native that implement Google's Material Design. ("react-native-paper": "^5.10.0")
+Getting Started
+Clone the repository.
+Install dependencies using npm install.
+Start the application with Expo commands (expo start, expo start --android, expo start --ios, expo start --web).
+
 
 
 ## Features Build-In
 
 * **Authentication Flow** - Already setup flow of authentication
-* **Theming** - A build-in theming compatability enabling light and dark modes that utilies Redux and React Native Paper. You can change the coloring, set new theme properties in `config/theme/Themes.js`
 * **API Endpoints** - Use this file to make HTTP requests to your server and retrive data, you can get more information in `config/Api.js`
 * **Permissions** - Use this to access/add all [Expo Permissions](https://docs.expo.io/versions/latest/sdk/permissions/), you can get more information in `config/Permisions.js`
 
-## Structure Layout
-
-```
-./react-native-expo-kit
-            |--- package.json     <============================ Contains all your project settings, packages, etc.
-            |--- app.json     <================================ Contains your application settings (i.e. Manifest, etc.)
-            |--- App.js        <=============================== Root application component
-            |--- assets/        <============================== All your assets go here
-                    |--- fonts/     <========================== All your fonts go here
-                            |--- SpaceMono-Regular.ttf      <== Example of a font file
-                    |--- images/      <======================== All your images go here
-                            |--- icon.png     <================ Example of an image file
-            |--- config/      <================================ All your configuration files go here
-                    |--- theme/     <========================== Contains Theme.js, Theme actions and reducer
-                    |--- Api.js     <========================== Contains your HTTP functions for any server side calls
-                    |--- Permissions.js      <================= Contains all Expo device permissions
-            |--- navigation/      <============================ Contains your root naivgation files
-                    |--- AppNavigator.js      <================ Contains the main application navigation scheme
-                    |--- AppNavigator.web.js      <============ Contains the main web application navigation scheme
-                    |--- AuthNavigator.js     <================ Contains the main stack of authentication screens
-                    |--- MainNavigator.js     <================ Contains the main stack of the bottom tab navigation (can be changed to drawer, etc.)
-                    |--- RootApplication.js     <============== Contains the root wrapper for AppNavigator, you can set any initial calls/functions here
-            |--- redux/     <================================== All redux related files go here
-                    |--- RootReducer.js     <================== Contains the combined reducers of all your reducers
-                    |--- Store.js     <======================== Contains the Redux store scheme
-            |--- screens/     <================================ All your application screens go here
-                    |--- LoadingScreen.js           <========== Contains the main loading component and your application auth checking
-                    |--- links/
-                    |--- settings/
-                    |--- auth/
-                            |--- LoginScreen.js        <======= Contains the styling and component for your Login screen
-                            |--- RegisterScreen.js          <== Contains the styling and component for your Register screen
-                            |--- WelcomeScreen        <======== Contains the landing page for your application
-                    |--- home/      <========================== Example of a screen directory
-                            |--- HomeActions.js     <========== Contains all Home screen redux actions
-                            |--- HomeReducer.js     <========== Contains Home screen reducer
-                            |--- HomeScreen.js     <=========== Contains the Home screen react component and styling             
-```
-
-## Prerequisites
-
-* [Node](https://nodejs.org) v8.10 (it is recommended to install it via [NVM](https://github.com/creationix/nvm))
-* [NPM](https://npmjs.com/) or [Yarn](https://https://yarnpkg.com/)
-* A development enviroment setup with React Native and Expo, you can follow [these instructions](https://docs.expo.io/versions/v35.0.0/introduction/installation/)
-
-## Getting Started
-
-1. Clone or download this repo:
-   - Download by hitting that green `clone or download` green button on the top right corner      
-   - Clone by running this command on your chosen directory `git clone https://github.com/AbdeenM/react-native-expo-kit.git your project name`
-2. Remove `.git` folder, by running `rm -rf .git`
-3. Open `package.json` and change all the details as you need (author, repository, scripts, etc.)
-4. Open `app.json` and configure all your application needs, see [these instructions](https://docs.expo.io/versions/latest/workflow/configuration/)
-5. Finally, install all dependencies by running `npm install` or `yarn install` depending on your favourite package manager
-
-## Project Status
-
-Will be updating this with every major updates of related dependencies and Expo SDK releases, feel free to improve or contribute!
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-
-Released under the **[MIT License](http://mit-license.org/)**
-
-Authored and Maintained by **[Abdeen Mohamed](https://github.com/AbdeenM)**
