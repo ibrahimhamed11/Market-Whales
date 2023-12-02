@@ -1,4 +1,4 @@
-# ![React Native Expo](https://github.com/AbdeenM/react-native-expo-kit/blob/main/icon.png) Market Whales - Aug 2023
+# ![React Native Expo](https://github.com/ibrahimhamed11/Market-Whales/blob/master/assets/Logo.png) Market Whales - Aug 2023
 
 [![Status](https://img.shields.io/badge/build-passing-green.svg?branch=main)](https://github.com/AbdeenM/react-native-expo-kit)
 [![React Native](https://img.shields.io/badge/React%20Native-v0.63.1-blue.svg?logo=react)](https://facebook.github.io/react-native/)
