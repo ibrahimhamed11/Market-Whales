@@ -1,19 +1,19 @@
-# ![React Native Expo](https://github.com/ibrahimhamed11/Market-Whales/blob/master/assets/Logo.png) Market Whales - Aug 2023
+# ![React Native Expo](https://github.com/ibrahimhamed11/Market-Whales/blob/master/assets/Logo.png) Market Whales - AUG 2023
 
 [![Status](https://img.shields.io/badge/build-passing-green.svg?branch=main)](https://github.com/AbdeenM/react-native-expo-kit)
 [![React Native](https://img.shields.io/badge/React%20Native-v0.63.1-blue.svg?logo=react)](https://facebook.github.io/react-native/)
-[![Expo](https://img.shields.io/badge/Expo-41.0.0-black.svg?logo=expo)](https://expo.io/)
+[![Expo](https://img.shields.io/badge/Expo-48.0.0-black.svg?logo=expo)](https://expo.io/)
 [![React Redux V7](https://img.shields.io/badge/Redux-v7.1.3-purple.svg?logo=redux)](https://react-redux.js.org/)
 [![React Navigation V4](https://img.shields.io/badge/React%20Navigation-v4.0.10-blue.svg?logo=react)](https://reactnavigation.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](http://mit-license.org/)
 
-Light Theme              |  Dark Theme
-:-------------------------:|:-------------------------:
-![](https://github.com/AbdeenM/react-native-expo-kit/blob/main/screenshots/lightTheme.jpeg)  |  ![](https://github.com/AbdeenM/react-native-expo-kit/blob/main/screenshots/darkTheme.jpeg)
+# APP UI
+
+(https://github.com/ibrahimhamed11/Market-Whales/blob/new/assets/appui.png)
 
 This project is a [React Native](https://facebook.github.io/react-native/) boilerplate using [Expo](https://expo.io/) that you can use to save you a couple of days worth of setup, for previous Expo SDK support check out the branches on this repo :).
 
-This boilerplate capitalizes on the use of [Redux](https://react-redux.js.org/), [React Navigation](https://reactnavigation.org/) and it follows Expo's initial project structure that is resulted from invoking `expo init` to create your project, providing you with a great and optimized file structure, organized directories, a great way to maintain your actions/reducers, your assets, configs, API end points, built in theming and much more.
+This boilerplate capitalizes on the use of [Redux](https://react-redux.js.org/), [React Navigation](https://reactnavigation.org/) and it follows Expo's initial project structure that is resulted from invoking `expo init` to create your project, providing you with a great and optimized file structure, organized directories, a great way to maintain your actions/reducers, your assets, configs, API end points, built-in theming, and much more.
 
 ## Utilities
 
