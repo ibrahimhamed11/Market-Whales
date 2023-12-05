@@ -196,27 +196,30 @@ const OnboardingScreen = ({ navigation }) => {
                 marginHorizontal: 30,
               }}
             >
-              <TouchableOpacity activeOpacity={0.8} onPress={skip}>
-                <View
-                  style={{
-                    borderRadius: 20,
-                    overflow: "hidden",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: 18,
-                      color: COLORS.gray,
-                      fontFamily: "Droid",
-                      paddingHorizontal: Dimensions.get("screen").width * 0.14,
-                      paddingVertical: Dimensions.get("screen").width * 0.04,
-                    }}
-                  >
-                    {localizationStrings[language].skip}
-                  </Text>
-                </View>
-              </TouchableOpacity>
+           <TouchableOpacity activeOpacity={0.8} onPress={skip}>
+  <View
+    style={{
+      borderRadius: 20,
+      overflow: "hidden",
+      borderColor: COLORS.darkerPurple, 
+      borderWidth: 1, 
+    }}
+  >
+    <Text
+      style={{
+        fontWeight: "bold",
+        fontSize: 18,
+        color: COLORS.darkerPurple,
+        fontFamily: "Droid",
+        paddingHorizontal: Dimensions.get("screen").width * 0.14,
+        paddingVertical: Dimensions.get("screen").width * 0.04,
+      }}
+    >
+      {localizationStrings[language].skip}
+    </Text>
+  </View>
+</TouchableOpacity>
+
               <View style={{ width: 15 }} />
               <TouchableOpacity activeOpacity={0.8} onPress={goToNextSlide}>
                 <View
